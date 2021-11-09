@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[]{standalone}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{pgfplots}
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+
+
+\tikzset{
+    every pin/.style={circle, fill=orange, minimum size = 4pt, text=orange, pin distance=32pt , outer sep=3pt },
+    every pin edge/.style={line width=0.4mm, orange, <-, shorten <= 5pt}
+  }
+
+\pgfplotsset{ log base 10 number format code/.code={$10^{\pgfmathprintnumber{#1}}$}
+}
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[DGrad] %graphpgf
+
+%%%%%%%%%%%%%%%%%% Data Table %%%%%%%%%%%%%%%%%%
+    \begin{axis}[%
+        DGrad,
+        xmode = log,
+        height=5.4cm,
+        %minor tick num=8,
+        %%%     Axe x
+        xmin=1e-4, xmax=1e2,
+        xtick={10^-4,10^-3,10^-2,10^-1,10^0,10^1,10^2},
+        %xticklabels={,-20,,0,,20},
+        %minor xtick={-10,...,8},
+        %%%     Axe y
+        ymin=-5,ymax=5,
+       ]%
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{}}] at (axis cs:4,0) {};
+        ;
+    \end{axis}
+\end{tikzpicture}
+\end{document}

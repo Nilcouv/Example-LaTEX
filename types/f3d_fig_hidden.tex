@@ -1,0 +1,117 @@
+%%%%%%%%%%%%%%%%%%%%%%%% calibration cross %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/calcross/.style={code={
+    \tikzset{calcross/.cd,#1}
+    \def\pv##1{\pgfkeysvalueof{/tikz/calcross/##1}}
+    %draw the main coordinate system axes
+    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+  }},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% CUBOID hidden back%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/cuboid/.style={code={%
+    \tikzset{cuboid/.cd,#1}%
+    \def\pv##1{%
+        \pgfkeysvalueof{/tikz/cuboid/##1}
+        }%
+    \draw [solid, pic actions, fill=\pv{fill}]
+        %%  point o - avant gauche
+        (0,0,0) coordinate (o)
+        node[label={[below, inner sep=\pv{inner sep}, yshift=-6pt]\pv{labo}}] {}
+        %% point a - avant droite
+        (\pv{scale}*\pv{width},0,0) coordinate (a)
+        node[label={[below, inner sep=\pv{inner sep}, yshift=-6pt]\pv{laba}}] {}
+        %% point b - arrière droite
+        (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+        node[label={[right, inner sep=\pv{inner sep}, xshift=2pt]\pv{labb}}] {}
+        %% point c - arrière gauche
+        (0,0,\pv{scale}*\pv{depth}) coordinate (c)
+        node[label={[left, inner sep=\pv{inner sep}, xshift=-2pt]\pv{labc}}] {}
+        %% point d - haut avant gauche
+        (0+\pv{xoffset}*\pv{scale},\pv{scale}*\pv{height},0) coordinate (d)
+        node[label={[above, inner sep=\pv{inner sep}]\pv{labd}}] {}
+        %% point e - haut avant droite
+        (\pv{scale}*\pv{width}+\pv{xoffset}*\pv{scale},\pv{scale}*\pv{height},0) coordinate (e)
+        node[label={[above, inner sep=\pv{inner sep}]\pv{labe}}] {}
+        %% point f - haut arrière gauche
+        (0,\pv{scale}*\pv{height}+\pv{xoffset}*\pv{scale},\pv{scale}*\pv{depth},\pv{scale}*\pv{depth}+\pv{yoffset}*\pv{scale}) coordinate (f)
+        node[label={[above, inner sep=\pv{inner sep}]\pv{labf}}] {}
+        %% point g - haut arrière droite
+        (\pv{scale}*\pv{width}+\pv{xoffset}*\pv{scale},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}+\pv{yoffset}*\pv{scale}) coordinate (g)
+        node[label={[above, inner sep=\pv{inner sep}]\pv{labg}}] {}
+        %% jonction entre les points
+        %%% bordure
+         (o) 
+         -- (a) 
+         node[midway, label={[below, inner sep=8pt]\pv{labA}}] {}
+         -- (b)
+         node[midway, label={[below right, inner sep=8pt]\pv{labB}}] {}
+         -- (g)
+         node[midway, label={[right, inner sep=8pt]\pv{labC}}] {}
+         -- (f)
+         -- (d)
+         -- cycle
+         %%% jonction interne - avant
+         (e)
+         edge (d)
+         edge (g)
+         edge (a)
+    ;
+  }},
+  cuboid/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  inner sep/.initial=0pt,
+  labA/.initial=,
+  labB/.initial=,
+  labC/.initial=,
+  labo/.initial=,
+  laba/.initial=,
+  labb/.initial=,
+  labc/.initial=,
+  labd/.initial=,
+  labe/.initial=,
+  labf/.initial=,
+  labg/.initial=,
+  fill/.initial=black!15,
+  scale/.initial=1,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% CUBOID Hidden Right %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/cuboid_hr/.style={code={%
+    \tikzset{cuboid_hr/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/cuboid_hr/##1}}
+    \draw [solid, opacity=.5, pic actions]
+    %%  point o - avant gauche
+    (0,0,0) coordinate (o)
+    %% point a - avant droite
+    (\pv{scale}*\pv{width},0,0) coordinate (a)
+    %% point b - arrière droite
+    (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+    %% point c - arrière gauche
+    (0,0,\pv{scale}*\pv{depth}) coordinate (c)
+    %% point d - haut avant gauche
+    (0,\pv{scale}*\pv{height},0) coordinate (d)
+    %% point e - haut avant droite
+    (\pv{scale}*\pv{width},\pv{scale}*\pv{height},0) coordinate (e)
+    %% point f - haut arrière gauche
+    (0,\pv{scale}*\pv{height},\pv{scale}*\pv{depth},) coordinate (f)
+    %% point g - haut arrière droite
+    (\pv{scale}*\pv{width},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}) coordinate (g)
+    %% jonction des points - façade
+    (o) -- (a) -- (e) -- (g) -- (f) -- (d)  edge (e) -- cycle
+    %% jonction des points - Latéraux
+    (b) edge[densely dashed] (g) edge[densely dashed] (a)
+    %% jonction des points - arrières
+    (c) edge[densely dashed] (o) edge[densely dashed] (f) edge[densely dashed] (b)
+    ;
+  }},
+  cuboid_hr/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  scale/.initial=1,
+}

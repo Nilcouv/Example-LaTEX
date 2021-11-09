@@ -1,0 +1,41 @@
+\documentclass[border=10pt]{standalone}
+
+\input{preamble.tex}
+\input{parameters.tex}
+
+\begin{document}
+\begin{tikzpicture}[graphpgf]
+\begin{axis}[
+    dotted3,
+    xmode = log,           % logarithmic x axis
+    axis x line=bottom, % only show the bottom x axis line, without an arrow tip
+    %axis x line*=bottom, % the star puts the tick inside the drawing
+    xmin=1e-4, xmax=1e2, % range for the x axis
+    %xlabel = Dose in Sv
+    %y=1.5cm,                 % y unit vector
+    %hide y axis,              % hide the y axis
+    ymode = log,           % logarithmic y axis
+    axis y line=left,
+    ymin=1e0,
+    ymax=1e4,
+    %ylabel={Number of failed banks},
+    %ylabel near ticks,
+    grid=both,
+    %grid style={line width=.1pt, draw=gray!30},
+    %major grid style={line width=.2pt,draw=gray!70},
+    minor tick num=10,
+    %enlargelimits={abs=0.5},
+    axis line style={-},
+    %axis line style={latex-latex},
+    %ticklabel style={font=\tiny,fill=white},
+]
+
+\addplot plot[mark=*, mark size=2pt, orange, mark options={fill=orange}] coordinates { (0.0003, 200) }
+node[right, inner sep=6pt] {A};
+
+%\addplot plot coordinates { (0.002, 1) };
+
+\end{axis}
+\end{tikzpicture}
+
+\end{document}

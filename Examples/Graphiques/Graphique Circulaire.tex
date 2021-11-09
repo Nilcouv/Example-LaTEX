@@ -1,0 +1,55 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\def\angle{-90}
+\def\radius{3.5}
+\def\cyclelist{{"cmarine","corange","cgris","cjaune","cbleu","cvert"}}
+\newcount\cyclecount \cyclecount=-1
+\newcount\ind \ind=-1
+
+\begin{tikzpicture}[graphtikz]
+\node[font=\sansmath\sffamily\Large] at (0,4.5) {Proportion de fleurs dans un jardin};
+\foreach \percent/\name in {
+      50/Roses,
+      25/Tournesols,
+      15/Tulipes,
+      10/Iris,
+    } 
+    {
+      \ifx\percent\empty\else               % If \percent is empty, do nothing
+        \global\advance\cyclecount by 1     % Advance cyclecount
+        \global\advance\ind by 1            % Advance list index
+        \ifnum6<\cyclecount                 % If cyclecount is larger than list
+          \global\cyclecount=0              %   reset cyclecount and
+          \global\ind=0                     %   reset list index
+        \fi
+        \pgfmathparse{\cyclelist[\the\ind]} % Get color from cycle list
+        \edef\color{\pgfmathresult}         %   and store as \color
+        % Draw angle and set labels
+        \draw[fill={\color!80},draw={\color!80!black}, line width=1mm] (0,0) -- (-\angle:\radius)
+          arc (-\angle:{(\angle+\percent*3.6)*-1}:\radius) -- cycle;
+        % Draw the label inside the arc
+        \node[font={\sansmath\sffamily\Large}, white] at ({(\angle+0.5*\percent*3.6)*-1}:0.7*\radius) {\percent\,\%};
+        % Draw the label ouside the arc
+        %\node[pin={(\angle+0.5*\percent*3.6)*-1}:\name]
+        %  at ({(\angle+0.5*\percent*3.6)*-1}:\radius) {};
+        \pgfmathparse{\angle+\percent*3.6}  % Advance angle
+        \xdef\angle{\pgfmathresult}         %   and store in \angle
+      \fi
+    };
+
+\matrix [below, xshift=12pt, line width=0mm] at (current bounding box.south) {
+      \node [fill=cmarine, minimum size=12pt, label={[right, shift={(6pt,-6pt)}, cmarine]Roses }] {}; &
+      \node [fill=corange, minimum size=12pt, label={[right, shift={(6pt,-6pt)}, corange]Tournesols }] {}; &
+      \node [fill=cgris, minimum size=12pt, label={[right, shift={(6pt,-6pt)}, cgris]Tulipes }] {}; &
+      \node [fill=cjaune, minimum size=12pt, label={[right, shift={(6pt,-6pt)}, cjaune]Iris }] {}; \\
+    };
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,60 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{xcolor}
+
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgadventor}
+%\usepackage{sansmath}
+
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[graphpgf]
+\begin{axis}[
+            %%%     Paramètre graphique de l'histogramme
+            bardiagram,
+            height=8cm,
+            %area style,
+            %
+            %%%     Titre
+            %title= Résultats sur 10 d'une classe de 30 élèves à une interrogation,
+            xlabel=Destinations,
+            ylabel=Nombre d'élèves,
+            %
+            %%%     Paramètres x
+            xmin=1-0.5, xmax=5+0.5,
+            %minor x tick num = 0,
+            xtick={1,...,5},
+            xticklabels={Séville, Rome, Paris, Barcelone, Lisbonne}, 
+            %xmajorgrids=true,
+            %xminorgrids=true,
+            %
+            %%%     Paramètres y
+            ymin=0, ymax=20+0.5,
+            ytick={-0,5,...,20},
+            %yticklabels={-1,...,7},
+            minor y tick num = 4,
+            ymajorgrids=true,
+            yminorgrids=true,
+            ]
+            \addplot+[orange, fill=orange!50!white] plot coordinates {%
+            (1, 10)
+            (2, 8)
+            (3, 8)
+            (4, 15)
+            (5, 6)%
+            };
+
+\end{axis}
+\end{tikzpicture}
+
+\end{document}

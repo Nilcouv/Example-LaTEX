@@ -1,0 +1,23 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=3pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+
+\input{types/f2d_fig_lab}
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[fig2D, scale=0.9]
+    \pic{triangloid={width=5, height=2.34923, offset=3.355, laba=A, labb=C, labc=B, scale=1.4}};
+    \draw[rotate=35]
+        (c)
+        +(-0.2,-0.7)
+        |- +(-0.7,-0.2)
+    ;
+\end{tikzpicture}
+\end{document}

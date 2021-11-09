@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[]{standalone}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{pgfplots}
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[graphpgf]
+
+%%%%%%%%%%%%%%%%%% Data Table %%%%%%%%%%%%%%%%%%
+\begin{axis}[%
+    graphxy,
+    minor tick num=1,
+    %%%     Axe x
+    xmin=-10-0.3, xmax=10+0.3,
+    xtick={-50,-48,...,50},
+    %minor xtick={-10,...,8},
+    domain=-11:11,
+    %%%     Axe x
+    ymin=-12-0.3,ymax=10+.3,
+    ytick={-50,-48,...,50},
+    %minor ytick={-8,...,8},
+    minor tick num=1,
+    restrict y to domain=-13:11,
+           ]%
+           \addplot[%
+                color=bleu,
+                opacity=0.8,
+                line width=0.4mm,
+                smooth,
+                samples=1024,
+                %restrict y to domain=-6:7,
+                ]%
+                {(x^2 + 2*x +1)/(-x+1)}
+                node [above right, pos=0.04, scale=1.2] {\Large g(x)}
+            ;
+            \addplot[%
+                color=black,
+                opacity=0.8,
+                line width=0.4mm,
+                smooth,
+                dashed,
+                %samples=299,
+                ]%
+                coordinates {(1, -13) (1, 11)}
+            ;
+            \addplot[%
+                color=black,
+                opacity=0.8,
+                line width=0.4mm,
+                smooth,
+                dashed,
+                %samples=299,
+                ]%
+                {-x-3}
+                node [below left, pos=0.1, scale=1.2] {\Large d}
+            ;
+\end{axis}
+
+\end{tikzpicture}
+\end{document}

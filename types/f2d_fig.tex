@@ -1,0 +1,295 @@
+%%%%%%%%%%%%%%%%%%%%%%%% LEXIQUE %%%%%%%%%%%%%%%%%%%%%%%%
+% \pic[fill=green, text=green, draw=black, opacity=.7] at (5,0) {squaroid={width=1, height=1, units=cm, scale=1}};
+%%%%%%%%%%%%%%%%%%%%%%%% calibration cross %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/calcross/.style={code={
+    \tikzset{calcross/.cd,#1}
+    \def\pv##1{\pgfkeysvalueof{/tikz/calcross/##1}}
+    %draw the main coordinate system axes
+    \draw[thick,->] (0,0) -- (1,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0) -- (0,1) node[anchor=north west]{$y$};
+    }},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% polygone à n côté v.210323 %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{%
+    pics/nfig/.style={%
+        code={%
+            \tikzset{nfig/.cd,#1}%
+            \def\pv##1{\pgfkeysvalueof{/tikz/nfig/##1}}
+            \pgfmathtruncatemacro{\NbStep}{(360-\pv{first})/\pv{step}}
+            \draw[thick, pic actions, draw, fill=\pv{fill}, rotate=\pv{rotate} ] 
+                (\pv{first}:\pv{radius})   % starting point
+                \foreach \x [evaluate=\x as \Angle using int(\pv{first}+\pv{step}*\x)] in {0,1,...,\NbStep}{%
+                    -- (\Angle:\pv{radius})}                       % loop drawing all the point
+                -- cycle                    % close the polygon
+            ;
+        }
+    },
+  nfig/.cd,
+  radius/.initial=3cm,
+  first/.initial=45,
+  step/.initial=90,
+  fill/.initial=none,
+  rotate/.initial=0,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% SQUAROID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/squaroid/.style={%
+    code={%
+        \tikzset{squaroid/.cd,#1}%
+        \def\pv##1{%
+            \pgfkeysvalueof{/tikz/squaroid/##1}%
+            }
+    \draw [solid, pic actions, fill=\pv{fill}, rotate=\pv{rotate}]
+    % point o - bas gauche
+    (0,0) coordinate (o)
+    % point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    % point b - haut droite
+    (\pv{scale}*\pv{width}+\pv{scale}*\pv{offset}-\pv{scale}*\pv{shrink},\pv{scale}*\pv{height}) coordinate (b)
+    % point c - haut gauche
+    (0+\pv{scale}*\pv{offset}+\pv{scale}*\pv{shrink},\pv{scale}*\pv{height}) coordinate (c) 
+    % connexion entre les points
+    (o) 
+    -- (a)
+    -- (b)
+    -- (c)
+    -- (o)
+    ;
+    }},
+    squaroid/.cd,
+    width/.initial=3,
+    height/.initial=2,
+    offset/.initial=0,
+    shrink/.initial=0,
+    scale/.initial=1,
+    inner sep/.initial=0pt,
+    fill/.initial=none,
+    rotate/.initial=0,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% REGULAR SQUAROID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/squaroid regular/.style={code={%
+    \tikzset{squaroid regular/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/squaroid regular/##1}}
+    \draw[thick, fill=\pv{fill}, pic actions] 
+    (45:\pv{radius}) 
+    \foreach \x in {135,225,...,359}
+        {
+            -- (\x:\pv{radius})}%
+            -- cycle 
+            (90:\pv{radius})%
+            ;
+        }
+    (0,\pv{radius}) coordinate node[above, scale=2.5] {\pv{lab}}
+    },
+  squaroid_regular/.cd,
+  radius/.initial=3cm,
+  fill/.initial=none,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% TRIANGLOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/triangloid/.style={code={%
+    \tikzset{triangloid/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/triangloid/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}, rotate=\pv{rotate}]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    %% point b - sommet
+    ({\pv{scale}*\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    %% jonction entre les points
+     (o) 
+     -- (a)
+     -- (b)
+     -- (o)
+     ;
+  }},
+  triangloid/.cd,
+  width/.initial=5,
+  height/.initial=2,
+  offset/.initial=0,
+  inner sep/.initial=0pt,
+  fill/.initial=none,
+  rotate/.initial=0,
+  scale/.initial=1,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% regular TRIANGLOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/triangloid regular/.style={code={%
+    \tikzset{triangloid regular/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/triangloid regular/##1}}%
+    \draw[thick, pic actions] (-30:\pv{radius}) \foreach \x in {90,210}%
+        {
+            -- (\x:\pv{radius})}%
+            -- cycle
+            ;
+        }
+    },
+  triangloid regular/.cd,
+  radius/.initial=3cm,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% TRAPEZOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/trapezoid/.style={code={%
+    \tikzset{trapezoid/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/trapezoid/##1}}
+    \draw [solid, pic actions]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    %% point b - haut droite
+    ({\pv{scale}*(\pv{widthtop}+\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    %% point c - haut gauche
+    (\pv{scale}*\pv{offset},\pv{scale}*\pv{height}) coordinate (c)
+    %% jonction entre les points
+     (o) -- (a) -- (b) -- (c) -- cycle
+     ;
+  }},
+  trapezoid/.cd,
+  width/.initial=5,
+  widthtop/.initial=3,
+  offset/.initial=1,
+  height/.initial=2,
+  scale/.initial=1,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% PARALLELOGRAM %%%%%%%%%%%%%%%%%%%%%%%%
+%%% /!\ USE SQUAROID - Depreciated version /!\
+\tikzset{pics/parallelogram/.style={code={%
+    \tikzset{parallelogram/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/parallelogram/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    node[label={[below, inner sep=\pv{inner sep}, shift={(0pt,-8pt)}]\pv{labo}}] {}
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    node[label={[below, inner sep=\pv{inner sep}, shift={(0pt,-8pt)}]\pv{laba}}] {}
+    %% point b - haut droite
+    ({\pv{scale}*(\pv{width}+\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    node[label={[above, inner sep=\pv{inner sep}, shift={(0pt,0pt)}]\pv{labb}}] {}
+    %% point c - haut gauche
+    (\pv{scale}*\pv{offset},\pv{scale}*\pv{height}) coordinate (c)
+    node[label={[above, inner sep=\pv{inner sep}, shift={(0pt,0pt)}]\pv{labc}}] {}
+    %% jonction entre les points
+     (o) 
+     -- (a)
+     node[midway, label={[below, inner sep=\pv{inner sep}, shift={(0pt,-8pt)}]\pv{labA}}] {}
+     -- (b) 
+     node[midway, label={[right, inner sep=\pv{inner sep}, shift={(6pt,0pt)}]\pv{labB}}] {}
+     -- (c) 
+     -- (o)
+     ;
+  }},
+  parallelogram/.cd,
+  width/.initial=5,
+  offset/.initial=1,
+  height/.initial=2,
+  labA/.initial=,
+  labB/.initial=,
+  labo/.initial=,
+  laba/.initial=,
+  labb/.initial=,
+  labc/.initial=,
+  inner sep/.initial=0pt,
+  scale/.initial=1,
+  fill/.initial=none,
+}
+
+%%%%%%%%%%%%%%%%%%%% REGULAR PENTAGOID %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/pentagoid regular/.style={code={%
+    \tikzset{pentagoid regular/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/pentagoid regular/##1}}
+    \draw[thick, fill=\pv{fill}] (18:\pv{radius}) 
+    \foreach \x in {90,162,...,359}
+        {-- (\x:\pv{radius})}%
+        -- cycle
+        ;
+        }
+    ;
+    },
+  pentagoid regular/.cd,
+  radius/.initial=3cm,
+  fill/.initial=none,
+}
+%%%%%%%%%%%%%%%%%%%% REGULAR HEXAGOID %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/hexagoid regular/.style={code={%
+    \tikzset{hexagoid regular/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/hexagoid regular/##1}}
+    \draw[thick, fill=\pv{fill}] (0:\pv{radius}) 
+    \foreach \x in {60,120,...,359}
+        {-- (\x:\pv{radius})}%
+        -- cycle
+        ;
+        }
+    ;
+    },
+  hexagoid regular/.cd,
+  radius/.initial=3cm,
+  fill/.initial=none,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% CROSS %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/croix/.style={code={%
+    \tikzset{croix/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/croix/##1}}
+    \draw [solid, pic actions, scale=\pv{scale}, rotate=\pv{rotate}]
+    %% point a - base gauche
+    (\pv{length},0) coordinate (a)
+    %% point b - base droit
+    ({\pv{width}-\pv{length}},0) coordinate (b)
+    %% point c - centre inférieur droit
+    ({(\pv{width}-\pv{length})},\pv{length}) coordinate (c)
+    %% point d - branche droite inférieur
+    (\pv{width},\pv{length}) coordinate (d)
+    %% point e - branche droite supérieur
+    (\pv{width},{\pv{height}-\pv{length}}) coordinate (e)
+    %% point f - centre supérieur droit
+    ({\pv{width}-\pv{length}},{\pv{height}-\pv{length}}) coordinate (f)
+    %% point h - sommet droit
+    ({\pv{width}-\pv{length}},\pv{height}) coordinate (g)
+    %% point i - sommet gauche
+    (\pv{length},\pv{height}) coordinate (h)
+    %% point j - centre supérieur gauche
+    (\pv{length},{\pv{height}-\pv{length}}) coordinate (i)
+    %% point k - branche gauche supérieur
+    (0,{\pv{height}-\pv{length}}) coordinate (j)
+    %% point l - branche gauche inférieur
+    (0,\pv{length}) coordinate (k)
+    %% point m - centre inférieur gauche
+    (\pv{length},\pv{length}) coordinate (l)
+    %% jonction entre les points
+     (a) -- (b) -- (c) -- (d) -- (e) -- (f) -- (g) -- (h) -- (i) -- (j) -- (k) -- (l) -- cycle
+     ;
+  }},
+  croix/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  length/.initial=2,
+  scale/.initial=1,
+  rotate/.initial=0,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% LOSANGE v.20210325 %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/losange/.style={code={%
+    \tikzset{losange/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/losange/##1}}
+    \draw [solid, pic actions, rotate=\pv{rotate}, scale=\pv{scale}]
+        %%  point a - bas
+        (0,0) coordinate (a)
+        %% point b - milieu droit
+        (\pv{width}/2,{(\pv{height}/2)+\pv{yoffset}}) coordinate (b)
+        %% point c - sommet
+        (0,\pv{height}) coordinate (c)
+        %% point c - haut gauche
+        (-\pv{width}/2,{(\pv{height}/2)+\pv{yoffset}}) coordinate (d)
+        %% jonction entre les points
+        (a) -- (b) -- (c) -- (d) -- cycle
+    ;
+  }},
+  losange/.cd,
+  width/.initial=3,
+  height/.initial=5,
+  yoffset/.initial=0,
+  scale/.initial=1,
+  rotate/.initial=0,
+}

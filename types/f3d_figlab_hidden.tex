@@ -1,0 +1,113 @@
+%%%%%%%%%%%%%%%%%%%%%%%% CUBOID hiddenback%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/cuboid hb/.style={code={%
+    \tikzset{cuboid hb/.cd,#1}%
+    \def\pv##1{%
+        \pgfkeysvalueof{/tikz/cuboid hb/##1}
+        }%
+    \draw [solid, pic actions, fill=\pv{fill}]
+        %%  point o - avant gauche
+        (0,0,0) coordinate (o)
+        %% point a - avant droite
+        (\pv{scale}*\pv{width},0,0) coordinate (a)
+        %% point b - arrière droite
+        (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+        %% point c - arrière gauche
+        (0,0,\pv{scale}*\pv{depth}) coordinate (c)
+        %% point f - haut arrière gauche
+        (0,\pv{scale}*\pv{height},\pv{scale}*\pv{depth},) coordinate (d)
+        %% point g - haut arrière droite
+        (\pv{scale}*\pv{width},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}) coordinate (e)
+        %% point e - haut avant droite
+        (\pv{scale}*\pv{width},\pv{scale}*\pv{height},0) coordinate (f)
+        %% point d - haut avant gauche
+        (0,\pv{scale}*\pv{height},0) coordinate (g)
+        %% jonction entre les points
+        %%% bordure
+         (o) 
+         -- (a) 
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] {}
+         -- (b)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] {}
+         -- (e)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}] {}
+         -- (d)
+         -- (g)
+         -- cycle
+         %%% jonction interne - avant
+         (f)
+         edge (e)
+         edge (a)
+         edge (g)
+    ;
+  }},
+  cuboid hb/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  inner sep/.initial=3pt,
+  labA/.initial=,
+  labB/.initial=,
+  labC/.initial=,
+  posA/.initial=below,
+  posB/.initial=below right,
+  posC/.initial=right,
+  fill/.initial=black!15,
+  scale/.initial=1,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% PRISMOID hiddenback%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/prismoid/.style={code={%
+    \tikzset{prismoid/.cd,#1}%
+    \def\pv##1{%
+        \pgfkeysvalueof{/tikz/prismoid/##1}
+        }%
+    \draw [solid, pic actions, fill=\pv{fill}]
+        %%  point o - avant gauche
+        (0,0,0) coordinate (o)
+        %% point a - avant droite
+        (\pv{scale}*\pv{width},0,0) coordinate (a)
+        %% point b - arrière droite
+        (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+        %% point d - haut avant
+        ({0+(\pv{scale}*\pv{offset})},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}) coordinate (c)
+        %% point e - haut arrière
+        ({0+(\pv{scale}*\pv{offset})},\pv{scale}*\pv{height},0) coordinate (d)
+        %%      jonction entre les points
+        %%%     bordure
+         (o) 
+         -- (a) 
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] {}
+         -- (b)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] {}
+         -- (c)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}] {}
+         -- (d)
+         -- cycle
+         %%%    jonction interne - avant
+         (d)
+         edge (a)
+    ;
+    \draw [solid, pic actions]
+         %%%    hauteur
+         (d) +(0,-\pv{scale}*\pv{height},0) coordinate (h)
+         edge[dashed, opacity=0.8] (o)
+         edge[dashed, opacity=0.8, <->] (d)
+         (d) +(0,-\pv{scale}*\pv{height}/2,0) node[label={[inner sep=\pv{inner sep}]\pv{posD}:\pv{labD}}]{}
+    ;
+  }},
+    prismoid/.cd,
+      width/.initial=5,
+      height/.initial=5,
+      depth/.initial=5,
+      offset/.initial=0,
+      inner sep/.initial=6pt,
+      labA/.initial=,
+      labB/.initial=,
+      labC/.initial=,
+      labD/.initial=,
+      posA/.initial=below,
+      posB/.initial=below right,
+      posC/.initial=above right,
+      posD/.initial=left,
+      fill/.initial=black!15,
+      scale/.initial=1,
+}

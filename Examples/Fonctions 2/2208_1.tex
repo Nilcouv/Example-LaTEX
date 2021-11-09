@@ -1,0 +1,72 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[]{standalone}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{pgfplots}
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[graphpgf]
+
+%%%%%%%%%%%%%%%%%% Data Table %%%%%%%%%%%%%%%%%%
+\begin{axis}[%
+    graphxy,
+    minor tick num=1,
+    %%%     Axe x
+    xmin=-6-0.3, xmax=6+0.3,
+    xtick={-50,...,50},
+    %minor xtick={-10,...,8},
+    domain=-7:7,
+    %%%     Axe x
+    ymin=-5-0.3,ymax=5+.3,
+    ytick={-50,...,50},
+    %minor ytick={-8,...,8},
+    minor tick num=1,
+    restrict y to domain=-6:6,
+           ]%
+           \addplot[%
+                color=orange,
+                opacity=0.8,
+                line width=0.4mm,
+                smooth,
+                samples=1024,
+                restrict y to domain=-6:7,
+                ]%
+                {(-x-2)/(x+1)}
+                node [left, pos=0.45, scale=1.2] {\Large f(x)}
+            ;
+            \addplot[%
+                color=black,
+                opacity=0.8,
+                line width=0.4mm,
+                smooth,
+                dashed,
+                %samples=299,
+                ]%
+                coordinates {(-1, -6) (-1, 6)}
+            ;
+            \addplot[%
+                color=black,
+                opacity=0.8,
+                line width=0.4mm,
+                smooth,
+                dashed,
+                %samples=299,
+                ]%
+                {-1}
+            ;
+\end{axis}
+
+\end{tikzpicture}
+\end{document}

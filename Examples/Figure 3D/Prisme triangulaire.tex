@@ -1,0 +1,32 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=3pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble}
+\input{parameters}
+
+\input{types/f3d_solid_lab}
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[volum3D, x={(0:1cm)}, y={(90:1cm)}, z={(89:0.6cm)}]
+
+% calibration cross
+%\pic at (5,0,0) {calcross};
+
+%   Figures
+\pic[rotate=0]{prismoid trib={width=8, height= 10, depth=6.9282, scale=0.9, labB={$8$ cm}, labC={10 cm}, scale=0.5}};
+
+\end{tikzpicture}
+\end{document}
+

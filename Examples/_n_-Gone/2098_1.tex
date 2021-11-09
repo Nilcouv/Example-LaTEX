@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+
+\input{types/f2d_fig_lab}
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[fig2D, scale=1, font={\sansmath\sffamily\large}]
+ 
+    \def\radius{2 cm}
+    \def\rangle{36}
+    %%%%%%%
+    \draw[]
+        (0:\radius)
+        \foreach \x in {0,36,...,359}{%
+        -- ({\x}:\radius)%
+        }
+        -- cycle
+    ;
+    \draw[yshift=6pt]
+        (72:2.cm)
+        edge[dashed, <->]
+        node[midway,label=above:{{8,2} cm}] {}
+        (108:2cm)
+    ;
+\end{tikzpicture}
+\end{document}

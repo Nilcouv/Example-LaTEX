@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=3pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble}
+\input{parameters}
+
+\input{types/f3d_solid_lab}
+
+
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[volum3D, x={(0:1cm)}, y={(90:1cm)}, z={(89:0.4cm)}]
+
+% calibration cross
+%\pic at (5,0,0) {calcross};
+
+%   Figures
+\pic[]{cone={ray=4, height=10.5, scale=0.5}};
+\draw[scale=0.5, dashed]
+    (0,0,0) node[circle, fill, inner sep=0, minimum size=5pt, label={[xshift=-0pt]above :8 cm}](o){}
+    +(-4,0,0)
+    edge[dashed, <->]
+    +(4,0,0)
+    %
+    (a) -- ++(4.3,0,0) coordinate (f)
+    (o) ++(4.3,0,0)
+    edge[dashed, <->]  
+    node[midway, right]{$10,5$ cm}
+    (f)
+;
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+
+\input{types/f2d_fig_lab}
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[fig2D, scale=1]
+ 
+    \def\radius{2 cm}
+    \def\rangle{30}
+    %%%%%%%
+    \draw[rotate=-0]
+        (0:\radius)
+        \foreach \x in {0,\rangle,...,359}{%
+            -- ({\x}:\radius)%
+        }
+        -- cycle
+    ;
+\end{tikzpicture}
+\end{document}

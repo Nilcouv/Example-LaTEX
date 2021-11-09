@@ -1,0 +1,422 @@
+%%%%%%%%%%%%%%%%%% PARAMETRES %%%%%%%%%%%%%%%%%%
+\author{Oscar.education}
+
+%%%%%%%%%%%%%%%%%% COLORS %%%%%%%%%%%%%%%%%%
+\definecolor{orange}{RGB}{245,128,37}
+\definecolor{norange}{RGB}{242,107,66}
+\definecolor{bleu}{RGB}{0,0,255}
+\definecolor{gris}{RGB}{158,158,158}
+\definecolor{vert}{RGB}{0,178,0}
+\definecolor{rouge}{RGB}{255,0,0}
+\definecolor{violet}{RGB}{190,0,120}
+
+%%%%%%%%%%%%%%%%%% COLORS - circular graph %%%%%%%%%%%%%%%%%%
+\definecolor{cmarine}{HTML}{323C85}
+\definecolor{corange}{RGB}{238,125,49}
+\definecolor{cgris}{RGB}{165,165,165}
+\definecolor{cjaune}{RGB}{254,192,0}
+\definecolor{cbleu}{HTML}{66A0D6}
+\definecolor{cvert}{RGB}{113,173,71}
+\definecolor{crouge}{RGB}{205,102,96}
+\definecolor{cmauve}{RGB}{178,55,167}
+\definecolor{ccyan}{RGB}{30,192,200}
+\definecolor{cnoir}{RGB}{0,0,0}
+
+
+%%%%%%%%%%%%%%%%%% FONTS %%%%%%%%%%%%%%%%%%
+%\setmainfont{sansmath}
+%\setsansfont{sansmath}
+
+%%%%%%%%%%%%%%%%%% OTHER %%%%%%%%%%%%%%%%%%
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+%\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+%\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%%%%%%%%%%%%%%%%%% TIKZ %%%%%%%%%%%%%%%%%%
+% Paramètres de l'image
+
+%\tikzset{pictparam/.style={font={\Verdana}, thick, line cap=round, line join=round, >=latex, x=1.0cm, y=1.0cm, scale=1}}      % non-fonctionnel, ne rajoute pas la police verdana à Tikz
+
+\tikzset{%
+    graphpgf/.style={%
+        font={\sansmath\sffamily\Large}, 
+        line cap=round, line join=round, 
+        >={Latex[length=3mm]}, 
+        x=1.0cm, y=1.0cm, 
+        background rectangle/.style={fill=white, shift={(-5pt,-5pt)}},
+        show background rectangle,
+        inner frame sep=10pt
+    }
+}
+
+\tikzset{%
+    DGrad/.style={%
+        font={\sansmath\sffamily\Large}, 
+        line cap=round, line join=round, 
+        >={Latex[length=3mm]}, 
+        x=1.0cm, y=1.0cm,
+        inner frame sep=10pt
+    }
+}
+
+\tikzset{%
+    graphtikz/.style={%
+        font={\sansmath\sffamily\Large}, 
+        line width=0.4mm, 
+        line cap=round, 
+        line join=square, 
+        >={Latex[length=3mm]}, 
+        x=1.0cm, y=1.0cm,
+    }
+}
+
+\tikzset{%
+    circulardiag/.style={%
+        font={\sansmath\sffamily\Large}, 
+        line width=0.4mm, 
+        line cap=round, 
+        line join=round, 
+        >={Latex[length=3mm]}, 
+        x=1.0cm, y=1.0cm, 
+        every pin edge/.style={draw=black!30},
+    }
+}
+
+\tikzset{%
+    fig2D/.style={%
+        font={\sansmath\sffamily\Large}, 
+        line width=0.4mm, 
+        line cap=round, 
+        line join=round, 
+        x=1.0cm, y=1.0cm, 
+        >={Latex[length=3mm]},
+    }
+}
+
+\tikzset{%
+    volum3D/.style={%
+        font={\sansmath\sffamily\Large}, 
+        line width=0.4mm, 
+        line cap=round, 
+        line join=round, 
+        >={Latex[length=3mm]},
+    }
+} 
+
+\tikzset{pictparam/.style={font={\sansmath\sffamily}, thick, line cap=round, line join=round, >={Latex[length=3mm]}, x=1.0cm, y=1.0cm, scale=1}} 
+    % \sansmath pour expressions math. sans empattement (sans serif)
+    % \sffamily pour texte normal sans empattement
+    
+% Style pour le tracé de fonctions
+\tikzset{fct/.style={thick, opacity=0.8, smooth, samples=200}}
+
+% Style pour le remplissage de surfaces
+\tikzset{surf/.style={gray!50!white,fill,opacity=0.6}}
+
+% Style pour les points
+\newcommand{\sommet}[4]
+    {
+        \draw[fill=orange] (#1,#2) circle (1.5pt);
+        \draw[#3] (#1,#2) node {#4};
+    }
+    
+% Style pour la base inférieure des solides
+\tikzset{baseinf/.style={thick, top color=gray!50!black, bottom color=gray!10, middle color=gray, shading=axis, opacity=0.25}}
+% Style pour la surface latérale des solides
+\tikzset{corps/.style={thick, left color=gray!50!black, right color=gray!50!black, middle color=gray!50, shading=axis, opacity=0.25}}
+% Style pour la base supérieure des solides
+\tikzset{basesup/.style={thick, top color=gray!90, bottom color=gray!2, middle color=gray!30, shading=axis, opacity=0.25}}
+
+%%%%%%%%%%%%%%%%%% PGFPLOTS %%%%%%%%%%%%%%%%%%
+
+%%%     Paramètre graphique des graphiques orthonormés pgfplots
+\pgfkeys{
+    /pgf/number format/.cd,
+    1000 sep={\,}
+}
+
+\pgfplotsset{%
+    /pgfplots/graphxy/.style={%
+        %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+        width=13.5cm,
+        height=13.5cm,
+        unit vector ratio=1 1 1,
+        %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+        xlabel=$\mathrm{x}$,         ylabel=$\mathrm{y}$,
+        axis lines = middle,
+        enlargelimits=false,
+        line width=0.4mm,
+        every major grid/.append style={black!20, line width=0.35mm,},
+        every minor grid/.append style={black!15, line width=0.15mm,},
+        every major tick/.append style={line width=0.4 mm, major tick length=7pt, black},
+        every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black},
+        %axis background/.style={fill=white},
+        grid=both,
+        axis line style = {shorten >=-12.5pt, shorten <=-12.5pt, -{Latex[length=3mm]}},
+        xlabel style={at={(ticklabel* cs:1)},yshift=-3.5pt, anchor=north west, font=\sansmath\sffamily\Large},
+        ylabel style={at={(ticklabel* cs:1)},xshift=-3.5pt, anchor=south east, font=\sansmath\sffamily\Large},
+        title style = {font=\sansmath\sffamily\Large, align=center, inner sep=12pt,},
+        extra x ticks={0},
+        extra x tick style={%
+            grid= none,
+            xticklabel style={%
+                below right,
+            },
+            every major tick/.append style={%
+                scale=1,
+                draw=none,
+                postaction={decorate},
+                decoration={%
+                    markings,
+                    mark=between positions 3.5pt and 1 step 7pt with{%
+                      \draw[fill] (0, 0) circle (1.5pt);
+                    },
+                },
+            },
+        },
+    }
+}
+
+\pgfplotsset{%
+    /pgfplots/XYnolab/.style={%
+        %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+        width=13.5cm,
+        height=13.5cm,
+        %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+        xlabel=$\mathrm{x}$,         ylabel=$\mathrm{y}$,
+        xticklabels={},
+        yticklabels={},
+        axis lines = middle,
+        enlargelimits=false,
+        line width=0.4mm,
+        scaled ticks=false, 
+        tick label style={/pgf/number format/fixed},
+        every major grid/.append style={black!20, line width=0.35mm,},
+        every minor grid/.append style={black!15, line width=0.15mm,},
+        every major tick/.append style={line width=0.4 mm, major tick length=7pt, black},
+        every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black},
+        %axis background/.style={fill=white},
+        grid=both,
+        axis line style = {shorten >=-12.5pt, shorten <=-12.5pt, -{Latex[length=3mm]}},
+        xlabel style={at={(ticklabel* cs:1)},yshift=-3.5pt, anchor=north west, font=\sansmath\sffamily\Large},
+        ylabel style={at={(ticklabel* cs:1)},xshift=-3.5pt, anchor=south east, font=\sansmath\sffamily\Large},
+        title style = {font=\sansmath\sffamily\Large, align=center, inner sep=12pt,},
+    }
+}
+
+\pgfplotsset{%
+    /pgfplots/graph/.style={%
+        %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+        width=13.5cm,
+        height=13.5cm,
+        %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+        xlabel=$\mathrm{x}$,         ylabel=$\mathrm{y}$,
+        axis lines = middle,
+        scaled ticks=false, 
+        tick label style={/pgf/number format/fixed},
+        enlargelimits=false,
+        line width=0.4mm,
+        every major grid/.append style={black!20, line width=0.35mm,},
+        every minor grid/.append style={black!15, line width=0.15mm,},
+        every major tick/.append style={line width=0.4 mm, major tick length=7pt, black},
+        every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black},
+        grid=both,
+        axis line style = {shorten >=-12.5pt, shorten <=-12.5pt, -{Latex[length=3mm]}},
+        xlabel style={at={(ticklabel* cs:1)},yshift=-3.5pt, anchor=north west, font=\sansmath\sffamily\Large},
+        ylabel style={at={(ticklabel* cs:1)},xshift=-3.5pt, anchor=south east, font=\sansmath\sffamily\Large},
+        title style = {font=\sansmath\sffamily\Large, align=center, inner sep=12pt,},
+        extra x ticks={0},
+        extra x tick style={%
+            grid= none,
+            xticklabel style={%
+                below right,
+            },
+            every major tick/.append style={%
+                scale=1,
+                draw=none,
+                postaction={decorate},
+                decoration={%
+                    markings,
+                    mark=between positions 3.5pt and 1 step 7pt with{%
+                      \draw[fill] (0, 0) circle (1.5pt);
+                    },
+                },
+            },
+        },
+    }
+}
+
+%%%     Paramètre graphique d'un diagramme à bar pgfplots
+\pgfplotsset{/pgfplots/bardiagram/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=15cm,
+            height=15cm,
+            %%%%%%%%%%  esthétique du graphique  %%%%%%%%%%
+            axis x line = bottom,
+            %axis y line = both,
+            axis line style={draw=none},
+            %enlargelimits=false,
+            line width=0.35mm,
+            every major grid/.append style={black!20, line width=0.35mm,},
+            every minor grid/.append style={black!15, line width=0.15mm,},
+            every major tick/.append style={line width=0.4 mm, major tick length=7pt, black!20},
+            every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black!15},
+            axis background/.style={fill=white},
+            %%%%%%%%%%  esthétique des titres %%%%%%%%%%
+            title style = {font=\sansmath\sffamily\Large, align=center, inner sep=6pt,shift={(0pt,12pt)}},
+            xlabel style={yshift=-18pt, font=\sansmath\sffamily\large, align=center},
+            ylabel style={xshift=-6pt, font=\sansmath\sffamily\large},
+            xticklabel style={align=center},
+            %%%%%%%%%%  esthétique des barres  %%%%%%%%%%
+            ybar,
+            bar width = 0.8cm,
+            mark=no,
+            }
+        }
+%%%     Paramètre graphique d'un diagramme linéaire pgfplots
+\pgfplotsset{/pgfplots/lineardiagram/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=15cm,
+            height=15cm,
+            %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+            axis x line = bottom,
+            axis y line = left,
+            axis line style={draw=none},
+            %enlargelimits=false,
+            line width=0.35mm,
+            every major grid/.append style={black!20, line width=0.35mm,},
+            every minor grid/.append style={black!15, line width=0.15mm,},
+            every major tick/.append style={line width=0.4 mm, major tick length=7pt, black!20},
+            every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black!15},
+            axis background/.style={fill=white},
+            %%%%%%%%%%  esthétique des titres %%%%%%%%%%
+            title style = {font=\sansmath\sffamily\Large, align=center, inner sep=12pt,},
+            xlabel style={yshift=-6pt, font=\sansmath\sffamily\large},
+            ylabel style={xshift=-6pt, font=\sansmath\sffamily\large},
+            grid=both,
+            }
+        }
+%%%     Paramètre graphique d'un diagramme à point pgfplots
+\pgfplotsset{/pgfplots/dotteddiagram/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=15cm,
+            height=15cm,
+            %%%%%%%%%%  esthétique du graphique  %%%%%%%%%%
+            axis x line = bottom,
+            axis y line = left,
+            axis line style={shorten >=-15pt, -{Latex[length=3mm]}},
+            %enlargelimits=false,
+            line width=0.4mm,
+            every major grid/.append style={black!20, line width=0.35mm,},
+            every minor grid/.append style={black!15, line width=0.15mm,},
+            every major tick/.append style={line width=0.4 mm, major tick length=7pt, black!20},
+            every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black!15},
+            axis background/.style={fill=white},
+            %%%%%%%%%%  esthétique des titres %%%%%%%%%%
+            title style = {font=\sansmath\sffamily\LARGE, align=center, inner sep=6pt,shift={(0pt,12pt)}},
+            xlabel style={font=\sansmath\sffamily\large, align=center,},
+            xlabel near ticks,
+            ylabel style={font=\sansmath\sffamily\large, align=center,},
+            ylabel near ticks,
+            }
+        }
+        
+\pgfplotsset{/pgfplots/dotted3/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=15cm,
+            height=15cm,
+            %%%%%%%%%%  esthétique du graphique  %%%%%%%%%%
+            axis x line = bottom,
+            axis y line = left,
+            axis line style={-},
+            %enlargelimits=false,
+            line width=0.4mm,
+            every major grid/.append style={black!20, line width=0.35mm,},
+            every minor grid/.append style={black!15, line width=0.15mm,},
+            every major tick/.append style={line width=0.4 mm, major tick length=7pt, black},
+            every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black},
+            axis background/.style={fill=white},
+            %%%%%%%%%%  esthétique des titres %%%%%%%%%%
+            title style = {font=\sansmath\sffamily\LARGE, align=center, inner sep=6pt,shift={(0pt,12pt)}},
+            xlabel style={font=\sansmath\sffamily\large, align=center,},
+            xlabel near ticks,
+            ylabel style={font=\sansmath\sffamily\large, align=center,},
+            ylabel near ticks,
+            }
+        }
+        
+        %%%     Paramètre graphique des graphiques orthonormés pgfplots (Pour exercices à imprimer)
+\pgfplotsset{/pgfplots/graphxy-imp/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=18cm,
+            height=18cm,
+            unit vector ratio=1 1 1,
+            %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+            xlabel=$x$,         ylabel=$y$,
+            axis lines = middle,
+            enlargelimits=false,
+            line width=0.5mm,
+            every major grid/.append style={black!20, line width=0.35mm,},
+            every minor grid/.append style={black!15, line width=0.15mm,},
+            every major tick/.append style={line width=0.4 mm, major tick length=7pt, black},
+            every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black},
+            axis background/.style={fill=white},
+            grid=both,
+            axis line style = {shorten >=-12.5pt, shorten <=-12.5pt, -{Latex[length=3mm]}},
+            xlabel style={at={(ticklabel* cs:1)},yshift=-3.5pt, anchor=north west, font=\sansmath\sffamily\Large},
+            ylabel style={at={(ticklabel* cs:1)},xshift=-3.5pt,, anchor=south east, font=\sansmath\sffamily\Large},
+            title style = {font=\sansmath\sffamily\Large, align=center, inner sep=12pt,},
+            extra x ticks={0},
+            extra x tick style={%
+                xticklabel style={below right},
+                every major grid/.append style={black,},
+                every major tick/.append style={black},
+                },
+            }
+        }
+%%%     Paramètre des graphiques (Pour exercices à imprimer)
+\pgfplotsset{/pgfplots/graph-imp/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=15cm,
+            height=15cm,
+            %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+            xlabel=$x$,         ylabel=$y$,
+            axis x line = bottom,
+            axis y line = left,
+            enlargelimits=false,
+            line width=0.4mm,
+            every major grid/.append style={black!20, line width=0.35mm,},
+            every minor grid/.append style={black!15, line width=0.15mm,},
+            every major tick/.append style={line width=0.4 mm, major tick length=7pt, black},
+            every minor tick/.append style={line width=0.15mm, minor tick length=4pt, black},
+            axis background/.style={fill=white},
+            grid=both,
+            axis line style = {shorten >=-12.5pt, shorten <=-12.5pt, -{Latex[length=3mm]}},
+            xlabel style={yshift=-12pt, font=\sansmath\sffamily\large, align=center},
+            ylabel style={yshift=12pt, font=\sansmath\sffamily\large},
+            title style = {font=\sansmath\sffamily\Large, align=center, inner sep=12pt,},
+            }
+        }
+        
+\pgfplotsset{/pgfplots/DGrad/.style={
+            %%%%%%%%%%  Dimensionnement de l'image  %%%%%%%%%%
+            width=15cm,
+            height=4cm,
+            %%%%%%%%%%  esthétique de la fonction %%%%%%%%%%
+            %%%%%%%%%%  esthétique des axes  %%%%%%%%%%
+            axis x line = middle,
+            axis y line = none,
+            line width=0.4mm,
+            %enlargelimits=false,
+            x axis line style = {shorten >=-12.5pt, shorten <=-12.5pt, -{Latex[length=3mm]}},
+            every major tick/.append style={line width=0.4 mm, major tick length=16pt, black},
+            every minor tick/.append style={line width=0.3mm, minor tick length=8pt, black},
+            axis line style = {shorten >=-10pt, shorten <=-10pt},
+            xlabel style={at={(ticklabel* cs:1)},yshift=-3.5pt, anchor=north west, font=\sansmath\sffamily\Huge},
+            /pgf/number format/.cd,
+            use comma,
+            1000 sep={}
+            }
+        }

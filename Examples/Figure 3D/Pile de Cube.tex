@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=3pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble}
+\input{parameters}
+
+\input{types/f3d_solid}
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[volum3D, x={(0:1cm)}, y={(90:1cm)}, z={(45:0.6cm)}]
+
+% calibration cross
+%\pic at (5,0,0) {calcross};
+
+%   Figures
+\pic {cuboid={width=1, depth=1, height=1}};
+\pic at(1,0,0) {cuboid={width=1, depth=1, height=1}};
+\pic at(2,0,0) {cuboid={width=1, depth=1, height=1}};
+%
+\pic at(0,0,-1){cuboid={width=1, depth=1, height=1}};
+\pic at(1,1,-1) {cuboid={width=1, depth=1, height=1}};
+\pic at(1,2,-1) {cuboid={width=1, depth=1, height=1}};
+\pic at(2,0,-1) {cuboid={width=1, depth=1, height=1}};
+%
+\pic at(0,0,-2) {cuboid={width=1, depth=1, height=1}};
+\pic at(1,0,-2) {cuboid={width=1, depth=1, height=1}};
+\pic at(2,0,-2) {cuboid={width=1, depth=1, height=1}};
+%
+\draw
+    (1.5,0,-4.1/0.6) edge[dashed, ->] node[below, pos=0]{Bilal} (1.5,0,-2.10/0.6)
+    (5.3,0,-0.5) edge[dashed, ->] node[right, pos=0]{Ludo} (3.3,0,-0.5)
+    (1.5,0,4.1/0.6) edge[dashed, ->] node[above, pos=0]{Robin} (1.5,0,2.1/0.6)
+;
+
+\end{tikzpicture}
+\end{document}

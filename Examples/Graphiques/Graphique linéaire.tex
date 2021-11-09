@@ -1,0 +1,70 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor}
+\usepackage{sansmath}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+%\input{preamble.tex}
+\input{parameters.tex}
+
+
+%%%%%%%%%%%%%%%%%% Variable %%%%%%%%%%%%%%%%%%
+%  Coordonnée des barres
+%   (#1, #2) ==> 
+%   #1=l'abscisse de la barre ; 
+%   #2=L'ordonnée -(/hauteur) de la barre.
+
+\newcommand{\listep}{(2, 85) 
+                    (4, 100)
+                    (6, 114)
+                    (8, 125)
+                    (10, 140)
+                    }
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[graphpgf]
+\begin{axis}[
+            %%%     Paramètre graphique de l'histogramme
+            lineardiagram,
+            width=15cm,
+            height=8cm,
+            %
+            %%%     Titre
+            title= Évolution de la taille de Clara en fonction de son âge,
+            xlabel=Age (année),
+            ylabel=Taille (cm),
+            %
+            %%%     Paramètres x
+            xticklabels={0,2,...,12}, 
+            xtick={0,2,...,12},
+            xmin=1, xmax=10+1,
+            minor x tick num = 1,
+            %xmajorgrids=true,
+            %xminorgrids=true;
+            %
+            %%%     Paramètres y
+            yticklabels={0,20,...,160},
+            ytick={0,20,...,160},
+            ymin=0, ymax=160,
+            minor y tick num = 1,
+            %ymajorgrids=true,
+            %yminorgrids=true,
+            %
+            %%%     Autre
+            %area style,
+            ]
+            \addplot+[mark=no,orange] plot coordinates {\listep};
+
+\end{axis}
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,60 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=3pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+
+\input{types/f2d_fig_lab}
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[fig2D, scale=1]
+    \draw
+        (0,0) node[right, shift={(9pt,9pt)}] {1}
+        -- ++(0:12.5) node[left, shift={(-9pt,9pt)}] {14}
+        -- ++(110:5.5) node[below left, shift={(0,0pt)}] {12}
+        -- ++(180:2.6) coordinate (a)
+        node[right, shift={(3pt,-15pt)}] {11}
+        node[below, shift={(-9pt,-21pt)}] {9}
+        node[left, shift={(-9pt,-9pt)}] {7}
+        -- ++(180:4.4) coordinate (b)
+        node[right, shift={(21pt,-9pt)}] {5}
+        node[below, shift={(3pt,-12pt)}] {2}
+        -- cycle
+        %
+        (a)
+        edge
+        node[pos=1, label={[shift={(-3pt,9pt)}]right:13}] (c) {}
+        node[pos=1, left, shift={(-6pt,15pt)}] {10}
+        +(-90:5.15)
+        edge
+        node[pos=1, right, shift={(9pt,9pt)}] {8}
+        node[pos=1, left, shift={(0,9pt)}] {4}
+        +(-125:6.3)
+        (b)
+        edge
+        node[pos=1, label={[shift={(-3pt,9pt)}]above:6}] (d) {}
+        node[pos=1, left, shift={(-9pt,-3pt)}] {3}
+        +(-35:3.6)
+        % 
+        (a)
+        +(0.2,-0.7)
+        |- +(0.7,-0.2)
+        (c)
+        +(-0.2,0.7)
+        |- +(-0.7,0.2)
+    ;
+    \draw[rotate=-34]
+        (b)
+        +(0.2,-0.7)
+        |- +(0.7,-0.2)
+        (d)
+        +(-0.2,0.7)
+        |- +(-0.7,0.2)
+    ;
+\end{tikzpicture}
+\end{document}

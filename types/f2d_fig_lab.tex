@@ -1,0 +1,274 @@
+%%%%%%%%%%%%%%%%%%%%%%%% SQUAROID v210331 %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/squaroid/.style={%
+    code={%
+        \tikzset{squaroid/.cd,#1}%
+        \def\pv##1{%
+            \pgfkeysvalueof{/tikz/squaroid/##1}%
+            }
+    \draw [solid, pic actions, fill=\pv{fill}, rotate=\pv{rotate}]
+    % point a - bas gauche
+    (0,0) coordinate (a) 
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep},]\pv{posa}:\pv{laba}}] {}
+    % point b - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (b) 
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep},]\pv{posb}:\pv{labb}}] {}
+    % point c - haut droite
+    (\pv{scale}*\pv{width}+\pv{scale}*\pv{offset}-\pv{scale}*\pv{shrink},\pv{scale}*\pv{height}) coordinate (c) 
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep},]\pv{posc}:\pv{labc}}] {}
+    % point d - haut gauche
+    (0+\pv{scale}*\pv{offset}+\pv{scale}*\pv{shrink},\pv{scale}*\pv{height}) coordinate (d) 
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep},]\pv{posd}:\pv{labd}}] {}
+    % connexion entre les points
+    (a) 
+    -- (b) node [midway, inner sep=0, label={[inner sep = \pv{inner sep},]\pv{posA}:\pv{labA}}] (A) {}
+    -- (c) node [midway, inner sep=0, label={[inner sep = \pv{inner sep},]\pv{posB}:\pv{labB}}] (B) {}
+    -- (d) node [midway, inner sep=0, label={[inner sep = \pv{inner sep},]\pv{posC}:\pv{labC}}] (C) {}
+    -- cycle node [midway, inner sep=0, label={[inner sep = \pv{inner sep},]\pv{posD}:\pv{labD}}] (D) {}
+    ;
+    }},
+    squaroid/.cd,
+    width/.initial=3,
+    height/.initial=2,
+    offset/.initial=0,
+    shrink/.initial=0,
+    labA/.initial=\empty,
+    labB/.initial=\empty,
+    labC/.initial=\empty,
+    labD/.initial=\empty,
+    laba/.initial=\empty,
+    labb/.initial=\empty,
+    labc/.initial=\empty,
+    labd/.initial=\empty,
+    posA/.initial=below,
+    posB/.initial=right,
+    posC/.initial=above,
+    posD/.initial=left,
+    posa/.initial=below,
+    posb/.initial=below,
+    posc/.initial=above,
+    posd/.initial=above,
+    inner sep/.initial=0pt,
+    fill/.initial=none,
+    rotate/.initial=0,
+    scale/.initial=1,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% TRIANGLOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/triangloid/.style={code={%
+    \tikzset{triangloid/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/triangloid/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}, rotate=\pv{rotate}]
+    %%  point a - bas gauche
+    (0,0) coordinate (a)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] {}
+    %% point b - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (b)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posb}:\pv{labb}}] {}
+    %% point c - sommet
+    ({\pv{scale}*\pv{offset})},\pv{scale}*\pv{height}) coordinate (c)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posc}:\pv{labc}}] {}
+    %% jonction entre les points
+     (a) 
+     -- (b) 
+     node [midway, label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] (A) {}
+     -- (c)
+     node [midway, label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] (B) {}
+     -- cycle
+     node [midway, label={[inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}] (C) {}
+     ;
+  }},
+  triangloid/.cd,
+  width/.initial=5,
+  height/.initial=2,
+  offset/.initial=0,
+  labA/.initial=\empty,
+  labB/.initial=\empty,
+  labC/.initial=\empty,
+  laba/.initial=\empty,
+  labb/.initial=\empty,
+  labc/.initial=\empty,
+  posA/.initial=below,
+  posB/.initial=above right,
+  posC/.initial=left,
+  posa/.initial=below,
+  posb/.initial=below,
+  posc/.initial=above,
+  inner sep/.initial=0pt,
+  fill/.initial=none,
+  rotate/.initial=0,
+  scale/.initial=1,
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% TRAPEZOID - arrow %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/trapezoid arrow/.style={code={%
+    \tikzset{trapezoid arrow/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/trapezoid arrow/##1}}
+    \draw [solid, pic actions]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    %% point b - haut droite
+    ({\pv{scale}*(\pv{widthtop}+\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    %% point c - haut gauche
+    (\pv{scale}*\pv{offset},\pv{scale}*\pv{height}) coordinate (c)
+    %% jonction entre les points
+     (o) -- (a) -- (b) -- (c) -- cycle
+     ;
+     % mesure du grand côté
+     \draw [<->]
+    (o) +(0,-5pt) coordinate (o1)
+    (a) +(0,-5pt) coordinate (a1)
+    (a1) -- (o1) [<->] node [midway, yshift= -24pt, label=\pv{width} \pv{unit},] {}
+    ;
+    % mesure de la hauteur
+    \draw [<->]
+    (c) -- +(90:\pv{scale}*-\pv{height}) node [pos=.5, xshift=24pt, label=\pv{height} \pv{unit}] {}
+    ;
+    % mesure du côté latéral
+    \draw [<->]
+    (b) +(5pt,0) coordinate (b1)
+    (a) +(5pt,0) coordinate (a1) 
+    -- (b1) node [midway, xshift=16pt, label=\pv{side} \pv{unit}] {}
+    ;
+    % mesure du sommet
+    \draw [|<->|]
+    (c) +(0,5pt) coordinate (c1)
+    (b) +(0,5pt) coordinate (b2)
+    -- (c1) node [midway, label=\pv{widthtop} \pv{unit}] {}
+    ;
+  }},
+  trapezoid arrow/.cd,
+  width/.initial=5,
+  widthtop/.initial=3,
+  offset/.initial=1,
+  height/.initial=2,
+  side/.initial=,
+  unit/.initial=cm,
+  scale/.initial=1,
+}
+%%%%%%%%%%%%%%%%%%%%%%%% TRAPEZOID  %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/trapezoid/.style={code={%
+    \tikzset{trapezoid/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/trapezoid/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}, opacity fill=\pv{opacity fill}, scale=\pv{scale}]
+    %%  point a - bas gauche
+    (0,0) coordinate (a)
+    %% point b - bas droite
+    (\pv{width},0) coordinate (b)
+    %% point c - haut droite
+    ({(\pv{widthtop}+\pv{offset})},\pv{height}) coordinate (c)
+    %% point d - haut gauche
+    (\pv{offset},\pv{height}) coordinate (d)
+    %% jonction entre les points
+     (o) 
+     -- (a) 
+     node [midway, label={[below, inner sep=6pt]\pv{width}~\pv{unit}}] {}
+     -- (b) 
+     node [midway, label={[right, inner sep=6pt]\pv{side} \pv{unit}}] {}
+     -- (c) 
+     node [midway, label={[above, inner sep=6pt]\pv{widthtop} \pv{unit}}] {}
+     -- cycle
+     ;
+  }},
+  trapezoid/.cd,
+  width/.initial=5,
+  widthtop/.initial=3,
+  offset/.initial=1,
+  height/.initial=2,
+  preh/.initial=,
+  side/.initial=,
+  unit/.initial=cm,
+  fill/.initial=none,
+  fill opacity/.initial=1,
+  scale/.initial=1,
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% PARALLELOGRAM - arrow%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/parallelogram arrow/.style={code={%
+    \tikzset{parallelogram arrow/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/parallelogram arrow/##1}}
+    \draw [solid, pic actions]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    %% point b - haut droite
+    ({\pv{scale}*(\pv{width}+\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    %% point c - haut gauche
+    (\pv{scale}*\pv{offset},\pv{scale}*\pv{height}) coordinate (c)
+    %% jonction entre les points
+     (o) -- (a) -- (b) -- (c) -- cycle
+     ;
+     %mesure de la base
+     \draw [<->]
+    (o) +(0,-5pt) coordinate (o1)
+    (a) +(0,-5pt) coordinate (a1)
+    (a1) -- (o1) [<->] node [midway, below, yshift= -6pt/\pv{scale}, label=\pv{width} \pv{unit},] {}
+    ;
+    % mesure de la hauteur
+    \draw[<->]
+    (b) -- +(90:\pv{scale}*-\pv{height}) coordinate (a2)
+    node [pos=.5, right, xshift=6pt/\pv{scale}, label=\pv{height}~\pv{unit}] {}
+    ;
+    \draw
+    (a2) edge[dashed] (a)
+    ;
+    % mesure du côté latéral
+    \draw [<->]
+    (c) +(-5pt,0) coordinate (c1)
+    (o) +(-5pt,0) coordinate (o2) 
+    -- (c1) node [midway, above left, xshift=-8pt/\pv{scale}, yshift=-6pt/\pv{scale}, label=\pv{side} \pv{unit}] {}
+    ;
+  }},
+  parallelogram arrow/.cd,
+  width/.initial=5,
+  offset/.initial=1,
+  height/.initial=2,
+  side/.initial=1.7,
+  unit/.initial=cm,
+  scale/.initial=1,
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% LOSANGE v210329 %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/losange/.style={code={%
+    \tikzset{losange/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/losange/##1}}
+    \draw [solid, pic actions, rotate=\pv{rotate}, scale=\pv{scale}]
+    %%  point a - bas
+    (0,0) coordinate (a)
+    node [inner sep=\pv{inner sep},\pv{posa}] {\pv{laba}}
+    %% point b - milieu droit
+    (\pv{width}/2,{(\pv{height}/2)+\pv{yoffset}}) coordinate (b)
+    node [inner sep=\pv{inner sep},\pv{posb}] {\pv{labb}}
+    %% point c - sommet
+    (0,\pv{height}) coordinate (c)
+    node [inner sep=\pv{inner sep},\pv{posc}] {\pv{labc}}
+    %% point c - milieu gauche
+    (-\pv{width}/2,{(\pv{height}/2)+\pv{yoffset}}) coordinate (d)
+    node [inner sep=\pv{inner sep},\pv{posd}] {\pv{labd}}
+    %% jonction entre les points
+     (a) -- (b) -- (c) -- (d) -- cycle
+     ;
+  }},
+  losange/.cd,
+  width/.initial=3,
+  height/.initial=5,
+  yoffset/.initial=0,
+  laba/.initial=\empty,
+  labb/.initial=\empty,
+  labc/.initial=\empty,
+  labd/.initial=\empty,
+  posa/.initial=below,
+  posb/.initial=right,
+  posc/.initial=above,
+  posd/.initial=left,
+  inner sep/.initial=3pt,
+  scale/.initial=1,
+  rotate/.initial=0,
+}

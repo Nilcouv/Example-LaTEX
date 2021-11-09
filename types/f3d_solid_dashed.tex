@@ -1,0 +1,46 @@
+%%%%%%%%%%%%%%%%%%%%%%%% cylinder v.210323 %%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/cylinder/.style={code={%
+    \tikzset{cylinder/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/cylinder/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=cyl]
+      %%%   CORPS DU CYLINDRE
+      \path[cylinder/corps]
+           plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+            ({(\pv{ray}*\pv{scale}*cos(\t))+\pv{xoffset}},
+             {\pv{height}*\pv{scale}},
+             {(\pv{ray}*\pv{scale}*sin(\t))+\pv{xoffset}})
+          -- 
+          plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan]
+            ({\pv{ray}*\pv{scale}*cos(\t)},
+            0,
+            {\pv{ray}*\pv{scale}*sin(\t)})
+          -- cycle;
+      %%%   BASE SUPÉRIEUR DU CYLINDRE
+      \path[cylinder/basesup] 
+        plot[smooth cycle,variable=\t,samples=37,domain=0:360]
+            ({(\pv{ray}*\pv{scale}*cos(\t))+\pv{xoffset}},
+            {\pv{height}*\pv{scale}},
+            {(\pv{ray}*\pv{scale}*sin(\t))+\pv{xoffset}})
+      ;
+      %%%   BASE INFÉRIEUR DU CYLINDRE
+      \draw[thick, densely dashed] 
+        plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan]
+            ({\pv{ray}*\pv{scale}*cos(\t)},
+            0,
+            {\pv{ray}*\pv{scale}*sin(\t)})
+      ;
+    \end{scope}
+  }},
+  cylinder/.cd,
+  ray/.initial=5,
+  height/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  scale/.initial=1,
+  inner sep/.initial=0pt,
+  corps/.style={draw,fill=black!15},
+  basesup/.style={draw,fill=black!15}
+}
+\makeatother

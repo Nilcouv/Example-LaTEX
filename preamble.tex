@@ -1,0 +1,78 @@
+%%%%%%%%%%%%%%%%%% FRENCH NOTATION %%%%%%%%%%%%%%%%%%
+%\usepackage[french]{babel} % /!\ BUG L'INSERTION DE VARIABLE POUR LE POSITIONNEMENT DES NOEUDS!assure la bonne césure des mots français et utilise les mots français pour les dates, etc.
+%\DecimalMathComma % veille à ce que LaTeX ne place pas automatiquement d'espace après la virgule d'un nombre décimal
+\frenchspacing % supprime les espaces additionnels suivant les points finaux
+% Ouvrir le fichier frenchb.dtx dans LaTeX et produire le document frenchb.dvi pour plus d'information.
+
+%%%%%%%%%%%%%%%%%% FONTS %%%%%%%%%%%%%%%%%%
+%\usepackage{fontspec} 
+% permet de définir le type de police de caractère utilisé SEULEMENT EN XeLaTeX et en LuaLaTeX!
+%
+\usepackage[utf8]{inputenc} 
+% encodage dans le fichier source en UTF8 pour admettre les caractères accentués
+% En enregistrant le fichier avec extension .tex, il faut choisir l'encodage UTF8.
+% De même, en ouvrant ce fichier ("Ouvrir..."), il faut désigner l'encodage UTF8.
+\usepackage[T1]{fontenc} % encodage des caractères en 8 caractères binaires dans le fichier TeX produit (puis dans le PostScript ou le PDF)
+%\usepackage{lmodern} % cette police de caractères Latin Modern est la plus souvent utilisée dans les encodages en 8 caractères binaires
+% La police Latin Modern complète la police originelle Computer Modern encore largement utilisée dans TeX mais qui ne dispose pas des caractères accentués.
+%
+\usepackage{tgadventor}
+% paquet de police de caractère TGadventor
+%
+\usepackage{sansmath}
+% Copie-colle la police de ssf dans la police par défaut
+%
+%\usepackage[sfdefault]{noto} 
+% cette police de caractères est plus lisible (sans serif) que la police Latin Modern, particulièrement pour les titres ou les exercices destinés aux enfants.
+%
+%\usepackage{kpfonts} 
+% It includes a complete set of features including mathematics as well as non-math characters and looks a little more interesting without being distracting.
+%
+%\usepackage[urw-garamond]{mathdesign} 
+% à tester: police Garamond Expert with Math Design
+%
+%\usepackage{garamondx} % à tester: police Garamond Expert with Math Design
+
+%%%%%%%%%%%%%%%%%% MATH. NOTATION %%%%%%%%%%%%%%%%%%
+%\usepackage{amsmath} % permet la création d'équations avec \begin{equation} \end{equation}
+\usepackage{amssymb} % pour les ensembles de nombres (\mathbb{R}) et des symboles du type: \rightsquigarrow et \bigstar
+\usepackage{amsthm} % for the "proof" environment
+%\usepackage{MnSymbol} % pour l'affichage de la flèche courbe \rcurvearrowdown
+\usepackage{numprint} % place des espaces entre groupes de 3 chiffres pour les nombres comportant un grand nombre de chiffres
+%\usepackage{graphicx}
+% permet l'intégration de graphique grâce à la commande \includegraphics
+\usepackage{xcolor}
+%\usepackage[usenames, dvipsnames]{xcolor} % A DECLARER AVANT TIKZ!
+% permet l'intégration de graphique grâce à la commande \includegraphics
+% xcolor permet d'afficher des images en couleurs
+% le pilote pdftex permet l'intégration d'images au format JPEG, PNG, PDF. Pour utiliser des images EPS, utiliser le pilote dvips
+%
+\usepackage{tikz} % permet l'intégration des dessins TikZ (les graphiques Geogebra peuvent être exportés au format TikZ)
+\usetikzlibrary{%
+    matrix,
+    arrows,
+    arrows.meta,
+    bending,
+    calc,
+    math,
+    shapes,
+    backgrounds,
+    decorations.markings,
+    }
+
+\usepackage{pgfplots} % Permet de tracer de graphiques
+
+\usepackage[pdfauthor={Oscar},%
+    pdftitle={},%
+    bookmarks,colorlinks]{hyperref}
+
+\usepackage{enumitem} % permet de réduire les espaces dans les environnements itemize avec l'option [nosep]
+\usepackage{textcomp} % symbole € via commande \texteuro
+\usepackage{comment} % pour (dé)commenter plusieurs lignes à l'aide de \includecomment ou \excludecomment
+% Il faut modifier ThisComment pour éviter d'interpréter les caractères UTF8 dans les commentaires
+% Voir: http://tex.stackexchange.com/questions/159820/comment-sty-and-utf8-encoding
+\renewcommand\ThisComment[1]{%
+  \immediate\write\CommentStream{\unexpanded{#1}}%
+}
+\usepackage{cancel} % permet, dans un environnement mathématique, de tracer une barre diagonale sur une expression
+%\usepackage{icomma}    %   gestion des espaces après la virgule

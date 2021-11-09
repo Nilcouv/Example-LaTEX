@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%% bblarrow %%%%%%%%%%%%%%%%%%%%%%%%
+% Example:
+% \pic[fill=green, text=green, draw=black, opacity=.7] at (5,0) {bubblelab={label=3, color=3, length=2, scale=1}};
+%
+%%  Labelle à bulle
+\tikzset{
+    pics/bubblelab/.style={
+        code={
+            \tikzset{bubblelab/.cd,#1}
+            \def\pv##1{% <- added
+                \pgfkeysvalueof{/tikz/bubblelab/##1}% <- added
+            }
+        \draw[color=\pv{color}, ->] (\pv{xmin},\pv{ymin},\pv{zmin}) -- ++(\pv{xmax},\pv{ymax},\pv{zmax}) 
+        node[color=\pv{color},fill=\pv{fill}!20, anchor=\pv{anchor}, scale=\pv{scale}, circle] {\pv{label}};;
+    }
+    },
+    bubblelab/.cd,
+    label/.initial=A,
+    color/.initial=black,
+    fill/.initial=orange,
+    anchor/.initial=south,
+    xmin/.initial=0,
+    xmax/.initial=1,
+    ymin/.initial=0,
+    ymax/.initial=0,
+    zmin/.initial=0,
+    zmax/.initial=0,
+    scale/.initial=1,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% pointer %%%%%%%%%%%%%%%%%%%%%%%%
+% Example:
+% \pic[fill=green, text=green, draw=black, opacity=.7] at (5,0) {bubblelab={label=3, color=3, length=2, scale=1}};
+%
+%%  Labelle à bulle
+\tikzset{
+    pics/pointer/.style={
+        code={
+            \tikzset{pointer/.cd,#1}
+            \def\pv##1{% <- added
+                \pgfkeysvalueof{/tikz/pointer/##1}% <- added
+            }
+        \draw[color=\pv{color}, <-] (\pv{xmin},\pv{ymin},\pv{zmin}) -- ++(\pv{xmax},\pv{ymax},\pv{zmax}) 
+        node[color=\pv{color},fill=\pv{fill}, anchor=\pv{anchor}, scale=\pv{scale}] {\pv{label}};;
+    }
+    },
+    pointer/.cd,
+    label/.initial=A,
+    color/.initial=black,
+    fill/.initial=white,
+    anchor/.initial=south,
+    xmin/.initial=0,
+    xmax/.initial=0,
+    ymin/.initial=0,
+    ymax/.initial=0,
+    zmin/.initial=0,
+    zmax/.initial=0,
+    scale/.initial=1,
+}

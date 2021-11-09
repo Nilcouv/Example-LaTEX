@@ -1,0 +1,140 @@
+%%%%%%%%%%%%%%%%%%%%%%%% DOTTED TRIANGLOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/dotted triangloid/.style={code={%
+    \tikzset{dotted triangloid/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/dotted triangloid/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}, rotate=\pv{rotate}]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{poso}:\pv{labo}}] {}
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{posa}:\pv{laba}}] {}
+    %% point b - sommet
+    ({\pv{scale}*\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{posb}:\pv{labb}}] {}
+    %% jonction entre les points
+     (o) 
+     -- (a) 
+     node [midway, label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] {}
+     -- (b)
+     node [midway, label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] {}
+     -- (o)
+     node [midway, label={[inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}] {}
+     ;
+  }},
+  dotted triangloid/.cd,
+  width/.initial=5,
+  height/.initial=2,
+  offset/.initial=0,
+  labA/.initial=,
+  labB/.initial=,
+  labC/.initial=,
+  labo/.initial=,
+  laba/.initial=,
+  labb/.initial=,
+  posA/.initial=below,
+  posB/.initial=above right,
+  posC/.initial=left,
+  poso/.initial=below,
+  posa/.initial=below,
+  posb/.initial=above,
+  inner sep/.initial=0pt,
+  fill/.initial=black!0,
+  rotate/.initial=0,
+  scale/.initial=1,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% dotted SQUAROID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/dotted squaroid/.style={%
+    code={%
+        \tikzset{dotted squaroid/.cd,#1}%
+        \def\pv##1{%
+            \pgfkeysvalueof{/tikz/dotted squaroid/##1}%
+            }
+    \draw [solid, pic actions]
+    % point o - bas gauche
+    (0,0) coordinate (o) 
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{poso}:\pv{labo}}] {}
+    % point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a) 
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{posa}:\pv{laba}}] {}
+    % point b - haut droite
+    (\pv{scale}*\pv{width}+\pv{scale}*\pv{offset}-\pv{scale}*\pv{shrink},\pv{scale}*\pv{height}) coordinate (b) 
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{posb}:\pv{labb}}] {}
+    % point c - haut gauche
+    (0+\pv{scale}*\pv{offset}+\pv{scale}*\pv{shrink},\pv{scale}*\pv{height}) coordinate (c) 
+    node [circle, fill=black, scale=0.5, label={[inner sep=\pv{inner sep},]\pv{posc}:\pv{labc}}] {}
+    % connexion entre les points
+    (o) 
+    -- (a) node [midway, label={[inner sep = \pv{inner sep},]\pv{posA}:\pv{labA}}] {}
+    -- (b) node [midway, label={[inner sep = \pv{inner sep},]\pv{posB}:\pv{labB}}] {}
+    -- (c) node [midway, label={[inner sep = \pv{inner sep},]\pv{posC}:\pv{labC}}] {}
+    -- (o) node [midway, label={[inner sep = \pv{inner sep},]\pv{posD}:\pv{labD}}] {}
+    ;
+    }},
+    dotted squaroid/.cd,
+    width/.initial=3,
+    height/.initial=2,
+    offset/.initial=0,
+    shrink/.initial=0,
+    scale/.initial=1,
+    labA/.initial=,
+    labB/.initial=,
+    labC/.initial=,
+    labD/.initial=,
+    labo/.initial=,
+    laba/.initial=,
+    labb/.initial=,
+    labc/.initial=,
+    posA/.initial=below,
+    posB/.initial=right,
+    posC/.initial=above,
+    posD/.initial=left,
+    poso/.initial=below,
+    posa/.initial=below,
+    posb/.initial=above,
+    posc/.initial=above,
+    inner sep/.initial=3pt,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% DOTTED PARALLELOGRAM %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/dotted parallelogram/.style={code={%
+    \tikzset{dotted parallelogram/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/dotted parallelogram/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}]
+    %%  point o - bas gauche
+    (0,0) coordinate (o)
+    node[circle, fill=black, scale=0.5, label={[below, inner sep=\pv{inner sep}, shift={(0pt,-8pt)}]\pv{labo}}] {}
+    %% point a - bas droite
+    (\pv{scale}*\pv{width},0) coordinate (a)
+    node[circle, fill=black, scale=0.5, label={[below, inner sep=\pv{inner sep}, shift={(0pt,-8pt)}]\pv{laba}}] {}
+    %% point b - haut droite
+    ({\pv{scale}*(\pv{width}+\pv{offset})},\pv{scale}*\pv{height}) coordinate (b)
+    node[circle, fill=black, scale=0.5, label={[above, inner sep=\pv{inner sep}, shift={(0pt,2pt)}]\pv{labb}}] {}
+    %% point c - haut gauche
+    (\pv{scale}*\pv{offset},\pv{scale}*\pv{height}) coordinate (c)
+    node[circle, fill=black, scale=0.5, label={[above, inner sep=\pv{inner sep}, shift={(0pt,2pt)}]\pv{labc}}] {}
+    %% jonction entre les points
+     (o) 
+     -- (a)
+     node[midway, label={[below, inner sep=\pv{inner sep}, shift={(0pt,-8pt)}]\pv{labA}}] {}
+     -- (b) 
+     node[midway, label={[right, inner sep=\pv{inner sep}, shift={(6pt,0pt)}]\pv{labB}}] {}
+     -- (c) 
+     -- (o)
+     ;
+  }},
+  dotted parallelogram/.cd,
+  width/.initial=5,
+  offset/.initial=1,
+  height/.initial=2,
+  labA/.initial=,
+  labB/.initial=,
+  labo/.initial=,
+  laba/.initial=,
+  labb/.initial=,
+  labc/.initial=,
+  inner sep/.initial=0pt,
+  scale/.initial=1,
+  fill/.initial=black!0,
+}

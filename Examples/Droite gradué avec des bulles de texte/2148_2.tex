@@ -1,0 +1,56 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[]{standalone}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
+\input{parameters.tex}
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{pgfplots}
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+
+
+\tikzset{
+    every pin/.style={circle, fill=orange!20!white, minimum size = 0.9cm, text=orange, pin distance=0.8cm},
+    every pin edge/.style={line width=0.3mm, orange, ->,}
+  }
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[DGrad]
+
+%%%%%%%%%%%%%%%%%% Data Table %%%%%%%%%%%%%%%%%%
+    \begin{axis}[%
+        DGrad,
+        height=5.4cm,
+        minor tick num=9,
+        %%%     Axe x
+        xmin=0-0.1, xmax=3+0.1,
+        xtick={0,1,...,3},
+        %xticklabels={,-20,,0,,20},
+        %minor xtick={-10,...,8},
+        %%%     Axe y
+        ymin=-5,ymax=5,
+       ]%
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{A}}] at (axis cs:2.7,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={-90:{B}}] at (axis cs:0.8,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{C}}] at (axis cs:0.2,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={-90:{D}}] at (axis cs:2.4,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={-90:{E}}] at (axis cs:1.4,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={-90:{F}}] at (axis cs:2.8,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{G}}] at (axis cs:1.2,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{H}}] at (axis cs:0.7,0) {};
+        %\node[circle, scale=0.3, pin={-90:{I}}] at (axis cs:32,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{J}}] at (axis cs:1.5,0) {};
+        \node[circle, inner sep=12pt, scale=0.3, pin={90:{K}}] at (axis cs:2.2,0) {};
+        ;
+    \end{axis}
+\end{tikzpicture}
+\end{document}

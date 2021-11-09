@@ -1,0 +1,265 @@
+%%%%%%%%%%%%%%%%%%%%%%%% CUBOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/cuboid/.style={code={%
+    \tikzset{cuboid/.cd,#1}%
+    \def\pv##1{%
+        \pgfkeysvalueof{/tikz/cuboid/##1}
+        }%
+    \draw [solid, pic actions,]
+        %%  point o - avant gauche
+        (0,0,0) coordinate (o)
+        %% point a - avant droite
+        (\pv{scale}*\pv{width},0,0) coordinate (a)
+        %% point b - arrière droite
+        (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+        %% point c - arrière gauche
+        (0,0,\pv{scale}*\pv{depth}) coordinate (c)
+        %% point d - haut arrière gauche
+        ({0+\pv{xoffset}*\pv{scale}+\pv{shrink}*\pv{scale}},\pv{height}*\pv{scale}, {(\pv{depth}*\pv{scale})-(\pv{shrink}*\pv{scale})+(\pv{yoffset}*\pv{scale})}) coordinate (d)
+        %% point e - haut arrière droite
+        (\pv{scale}*\pv{width}+\pv{xoffset}*\pv{scale}-\pv{shrink}*\pv{scale},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}-\pv{shrink}*\pv{scale}+\pv{yoffset}*\pv{scale}) coordinate (e)
+        %% point f - haut avant droite
+        (\pv{scale}*\pv{width}+\pv{xoffset}*\pv{scale}-\pv{shrink}*\pv{scale},\pv{scale}*\pv{height},0+\pv{yoffset}*\pv{scale}+\pv{shrink}*\pv{scale}) coordinate (f)
+        %% point g - haut avant gauche
+        (0+\pv{shrink}*\pv{scale}+\pv{xoffset}*\pv{scale},\pv{scale}*\pv{height},{0+\pv{shrink}*\pv{scale}+\pv{yoffset}*\pv{scale}}) coordinate (g)
+        %% jonction entre les points
+        %%% bordure
+         (o) 
+         -- (a)
+         -- (b)
+         -- (e)
+         -- (d)
+         -- (g)
+         -- cycle
+         %%% jonction interne - avant
+         (f)
+         edge (a)
+         edge (e)
+         edge (g)
+         %%% jonction interne - arrière
+         (c) 
+         edge[densely dashed] (o) 
+         edge[densely dashed] (b) 
+         edge[densely dashed] (d)
+    ;
+  }},
+  cuboid/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  shrink/.initial=0,
+  scale/.initial=1,
+}
+
+%%%%%%%%%%%%%%%%%%%% CONE %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/cone/.style={code={%
+    \tikzset{cone/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/cone/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=sph]
+        \path[cone/corps]
+        %%%     Patrie supérieur
+        (0,\pv{height}*\pv{scale},\pv{ray}*\pv{scale}) coordinate (h)
+        %plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+        %(0,
+        %{\pv{height}},
+        %\pv{ray})
+        %node[label={[]\pv{lab}}] (h){}
+        --
+        %%%     Patrie Inférieur
+        plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+        ({\pv{ray}*\pv{scale}*cos(\t)},
+        0,
+        {\pv{ray}*\pv{scale}*sin(\t)})
+        -- cycle
+        ;
+        \draw[thick, densely dashed]
+        %%%       Arc Avant
+        plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan]
+        ({\pv{ray}*\pv{scale}*cos(\t)},
+        0,
+        {\pv{ray}*\pv{scale}*sin(\t)})
+        %%%       Arc Arrière
+        plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan]
+        ({\pv{ray}*\pv{scale}*cos(\t)},
+        0,
+        {\pv{ray}*\pv{scale}*sin(\t)})
+        ;
+    \end{scope}
+  }},
+  cone/.cd,
+  ray/.initial=5,
+  height/.initial=10,
+  inner sep/.initial=3pt,
+  lab/.initial=,
+  posl/.initial=above,
+  scale/.initial=1,
+  corps/.style={draw},
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%% DEMI SPHERE %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/demi sphere/.style={code={%
+    \tikzset{demi sphere/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/demi sphere/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=sph]
+        \path[demi sphere/corps]
+        %%%     Patrie supérieur
+        plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+        (-{\pv{ray}*\pv{scale}*cos(\t)},
+        -{\pv{ray}*\pv{scale}*sin(\t)},
+        0)
+        %%%       Arc Avant
+        plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan]
+        ({\pv{ray}*\pv{scale}*cos(\t)},0,
+        {\pv{ray}*\pv{scale}*sin(\t)})
+        ;
+        %%% Trait en pointié
+        \draw[thick, densely dashed]
+        %%%       Arc Arrière
+        plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan]
+        ({\pv{ray}*\pv{scale}*cos(\t)},0,
+        {\pv{ray}*\pv{scale}*sin(\t)})
+        ;
+    \end{scope}
+  }},
+  demi sphere/.cd,
+  ray/.initial=5,
+  scale/.initial=1,
+  labo/.initial=,
+  labA/.initial=,
+  poso/.initial=above left,
+  posA/.initial=above,
+  corps/.style={draw,fill=black!0},
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%% PYRAMIDE A BASE CARRÉE %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/pyramid/.style={code={
+    \tikzset{pyramid/.cd,#1}
+    \def\pv##1{\pgfkeysvalueof{/tikz/pyramid/##1}}
+    \draw [solid, opacity=0.8, pic actions, fill=\pv{fill}]
+    %%  point o - avant gauche
+    (0,0,0) coordinate (o)
+    %% point a - avant droit
+    (\pv{scale}*\pv{width},0,0) coordinate (a)
+    %% point b - arrière droit
+    (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+    %% point c - arrière gauche
+    (0,0,\pv{scale}*\pv{depth}) coordinate (c)
+    %% point d - sommet
+    ({(\pv{scale}*\pv{width}/2)+\pv{xoffset}},\pv{scale}*\pv{height},{(\pv{scale}*\pv{depth}/2)+\pv{yoffset}}) coordinate (d)
+    %%  Tracé
+    (o) 
+     -- (a)
+     -- (b)
+     -- (d)
+     -- cycle
+     %%  Tracé
+     (d)
+     edge (a)
+     %%%        tracés en pointillés
+     (c) 
+     edge[densely dashed] (o)
+     edge[densely dashed] (b) 
+     edge[densely dashed] (d);
+  }},
+  pyramid/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  scale/.initial=1,
+  fill/.initial=none,
+}
+
+%%%%%%%%%%%%%%%%%%%% PRISMOID triangulaire sur base %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/prismoid trib/.style={code={%
+    \tikzset{prismoid trib/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/prismoid trib/##1}}
+    \draw [solid, pic actions,]
+    %%  point o - avant gauche
+    (0,0,0) coordinate (o)
+    %% point a - avant droite
+    (\pv{scale}*\pv{width},0,0) coordinate (a)
+    %% point b - arrière central
+    ({\pv{scale}*(\pv{width}/2 + \pv{xoffset})},0,\pv{scale}*\pv{depth}) coordinate (b)
+    %% point c - haut arrière central
+    ({\pv{scale}*(\pv{width}/2 + \pv{xoffset})},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}) coordinate (c)
+    %% point d - haut avant droite
+    (\pv{scale}*\pv{width},\pv{scale}*\pv{height},0) coordinate (d)
+    %% point e - haut avant gauche
+    (0,\pv{scale}*\pv{height},0) coordinate (e)
+    
+    %% jonction entre les points
+     (o) 
+     -- (a)
+     -- (d) 
+     -- (c)
+     -- (e) 
+     edge (d) 
+     -- cycle
+     %% Tracé en pointillé
+     (b) 
+     edge[densely dashed] (o) 
+     edge[densely dashed] (a) 
+     edge[densely dashed] (c)
+     ;
+  }},
+  prismoid trib/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  scale/.initial=1,
+}
+
+%%%%%%%%%%%%%%%%%%%% Cylinder %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/cylinder/.style={code={%
+    \tikzset{cylinder/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/cylinder/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=cyl]
+      %%%   CORPS DU CYLINDRE
+      \path[cylinder/corps]
+       plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+      ({(\pv{ray}*\pv{scale}*cos(\t))+\pv{xoffset}},
+      {\pv{height}*\pv{scale}},{(\pv{ray}*\pv{scale}*sin(\t))+\pv{xoffset}})
+      -- 
+      plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan]
+      ({\pv{ray}*\pv{scale}*cos(\t)},0,
+      {\pv{ray}*\pv{scale}*sin(\t)})
+      -- cycle;
+      %%%   BASE SUPÉRIEUR DU CYLINDRE
+      \path[cylinder/basesup] plot[smooth cycle,variable=\t,samples=37,domain=0:360]
+      ({(\pv{ray}*\pv{scale}*cos(\t))+\pv{xoffset}},
+      {\pv{height}*\pv{scale}},
+      {(\pv{ray}*\pv{scale}*sin(\t))+\pv{xoffset}})
+      ;
+      %%%   BASE INFÉRIEUR DU CYLINDRE
+      \draw[thick, densely dashed] 
+      plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan]
+      ({\pv{ray}*\pv{scale}*cos(\t)},0,
+          {\pv{ray}*\pv{scale}*sin(\t)})
+      ;
+    \end{scope}
+  }},
+  cylinder/.cd,
+  ray/.initial=5,
+  height/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  scale/.initial=1,
+  poso/.initial=below left,
+  posA/.initial=above,
+  inner sep/.initial=0pt,
+  corps/.style={draw,fill=none},
+  basesup/.style={draw,fill=none}
+}
+\makeatother

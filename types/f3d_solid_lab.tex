@@ -1,0 +1,501 @@
+%%%%%%%%%%%%%%%%%%%%%%%% CUBOID v. 210406 %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/cuboid/.style={code={%
+    \tikzset{cuboid/.cd,#1}%
+    \def\pv##1{%
+        \pgfkeysvalueof{/tikz/cuboid/##1}
+        }%
+    \draw [solid, pic actions, fill=\pv{fill}, fill opacity=\pv{fill opacity}, scale=\pv{scale}]
+        %%  point a - avant gauche
+        (0,0,0) coordinate (a)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] {}
+        %% point b - avant droite
+        (\pv{width},0,0) coordinate (b)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posb}:\pv{labb}}] {}
+        %% point c - arrière droite
+        (\pv{width},0,\pv{depth}) coordinate (c)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posc}:\pv{labc}}] {}
+        %% point d - arrière gauche
+        (0,0,\pv{depth}) coordinate (d)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posd}:\pv{labd}}] {}
+        %% point e - haut arrière gauche
+        ({0+\pv{xoffset}+\pv{shrink}},\pv{height}, {(\pv{depth})-(\pv{shrink})+(\pv{yoffset})}) coordinate (e)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{pose}:\pv{labe}}] {}
+        %% point f - haut arrière droite
+        (\pv{width}+\pv{xoffset}-\pv{shrink},\pv{height},\pv{depth}-\pv{shrink}+\pv{yoffset}) coordinate (f)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posf}:\pv{labf}}] {}
+        %% point g - haut avant droite
+        (\pv{width}+\pv{xoffset}-\pv{shrink},\pv{height},0+\pv{yoffset}+\pv{shrink}) coordinate (g)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posg}:\pv{labg}}] {}
+        %% point h - haut avant gauche
+        (0+\pv{shrink}+\pv{xoffset},\pv{height},{0+\pv{shrink}+\pv{yoffset}}) coordinate (h)
+        node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posh}:\pv{labh}}] {}
+        %% jonction entre les points
+        %%% bordure
+         (a) 
+         -- (b) 
+         node[midway, label={[opacity=1, inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] {}
+         -- (c)
+         node[midway, label={[opacity=1, inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] {}
+         -- (f)
+         node[midway, label={[opacity=1, inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}] {}
+         -- (e)
+         -- (h)
+         -- cycle
+         %%% jonction interne - avant
+         (g)
+         edge (b)
+         edge (f)
+         edge (h)
+         %%% jonction interne - arrière
+         (d) 
+         edge[densely dashed] (a) 
+         edge[densely dashed] (c) 
+         edge[densely dashed] (e)
+    ;
+  }},
+  cuboid/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  shrink/.initial=0,
+  inner sep/.initial=0pt,
+  labA/.initial=\empty,
+  labB/.initial=\empty,
+  labC/.initial=\empty,
+  laba/.initial=\empty,
+  labb/.initial=\empty,
+  labc/.initial=\empty,
+  labd/.initial=\empty,
+  labe/.initial=\empty,
+  labf/.initial=\empty,
+  labg/.initial=\empty,
+  labh/.initial=\empty,
+  posA/.initial=below,
+  posB/.initial=below right,
+  posC/.initial=right,
+  posa/.initial=below,
+  posb/.initial=below,
+  posc/.initial=below right,
+  posd/.initial=above left,
+  pose/.initial=above,
+  posf/.initial=above,
+  posg/.initial=above,
+  posh/.initial=above,
+  fill/.initial=black!30,
+  fill opacity/.initial=0.5,
+  scale/.initial=1,
+}
+
+%%%%%%%%%%%%%%%%%%%% CONE v210331 %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/cone/.style={code={%
+    \tikzset{cone/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/cone/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=sph, scale=\pv{scale}]
+        \path[cone/corps]
+            %%%     Patrie supérieur
+            (0,\pv{height},\pv{ray}) 
+            node[label={[inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] (a) {}
+            %plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+            %(0,
+            %{\pv{height}},
+            %\pv{ray})
+            %node[label={[]\pv{lab}}] (h){}
+            --
+            %%%     Patrie Inférieur
+            plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}]
+            ({\pv{ray}*cos(\t)},
+            0,
+            {\pv{ray}*sin(\t)})
+            -- cycle
+        ;
+        \draw[thick, densely dashed]
+            %%%       Arc Avant
+            plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan]
+            ({\pv{ray}*cos(\t)},
+            0,
+            {\pv{ray}*sin(\t)})
+            %%%       Arc Arrière
+            plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan]
+            ({\pv{ray}*cos(\t)},
+            0,
+            {\pv{ray}*sin(\t)})
+        ;
+    \end{scope}
+  }},
+  cone/.cd,
+  ray/.initial=5,
+  height/.initial=10,
+  inner sep/.initial=3pt,
+  laba/.initial=,
+  posa/.initial=above,
+  scale/.initial=1,
+  corps/.style={draw,fill=black!30, fill opacity=0.5},
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%% Cylinder ver.210326 %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/cylinder/.style={code={%
+    \tikzset{cylinder/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/cylinder/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=cyl, scale=\pv{scale}]
+        %%%   CORPS DU CYLINDRE
+        \path[cylinder/corps]
+            plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}](%
+                {(\pv{ray}*cos(\t))+\pv{xoffset}},
+                {\pv{height}},
+                {(\pv{ray}*sin(\t))+\pv{xoffset}}
+                )%
+            -- 
+            plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan](%
+                {\pv{ray}*cos(\t)},
+                0,
+                {\pv{ray}*sin(\t)}
+                )%
+            -- cycle
+        ;
+      %%%   BASE SUPÉRIEUR DU CYLINDRE
+      \path[cylinder/basesup] plot[smooth cycle,variable=\t,samples=37,domain=0:360](%
+        {(\pv{ray}*cos(\t))+\pv{xoffset}},
+        {\pv{height}},
+        {(\pv{ray}*sin(\t))+\pv{xoffset}}
+        )
+      ;
+      %%%   BASE INFÉRIEUR DU CYLINDRE
+      \draw[thick, densely dashed] 
+      plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan](%
+        {\pv{ray}*cos(\t)},
+        0,
+        {\pv{ray}*sin(\t)}
+        )
+      %%%   ETIQUETTE
+      (0,0,0) 
+      node [circle, fill, inner sep=0, minimum size=4pt, label={[inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] (a) {}
+      %
+      (0,0,-\pv{ray}) 
+      node[inner sep=0, label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] (A) {}
+      %
+      (\pv{ray},\pv{height}/2,0) 
+      node[inner sep=0, label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] (B) {}
+      ;
+    \end{scope}
+  }},
+  cylinder/.cd,
+  ray/.initial=5,
+  height/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  scale/.initial=1,
+  laba/.initial=\empty,
+  labA/.initial=\empty,
+  labB/.initial=\empty,
+  posa/.initial=below,
+  posA/.initial=below,
+  posB/.initial=right,
+  inner sep/.initial=3pt,
+  corps/.style={draw,fill=black!15},
+  basesup/.style={draw,fill=black!15}
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%% PRISMOID triangulaire sur base v210331 %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/prismoid trib/.style={code={%
+    \tikzset{prismoid trib/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/prismoid trib/##1}}
+    \draw [solid, pic actions, fill=\pv{fill}, fill opacity=\pv{fill opacity}, rotate=\pv{rotate}, scale=\pv{scale}]
+    %%  point a - avant gauche
+    (0,0,\pv{depth}) coordinate (a)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] {}
+    %% point b - avant droite
+    (\pv{width}/2,0,0) coordinate (b)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posb}:\pv{labb}}] {}
+    %% point c - arrière central
+    ({(\pv{width} + \pv{xoffset})},0,\pv{depth}) coordinate (c)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posc}:\pv{labc}}] {}
+    %% point d - haut arrière central
+    ({(\pv{width} +\pv{xoffset})},\pv{height},\pv{depth}) coordinate (d)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posd}:\pv{labd}}] {}
+    %% point e - haut avant droite
+    (\pv{width}/2,\pv{height},0) coordinate (e)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{pose}:\pv{labe}}] {}
+    %% point f - haut avant gauche
+    (0,\pv{height},\pv{depth}) coordinate (f)
+    node [inner sep=3pt, label={[inner sep=\pv{inner sep}]\pv{posf}:\pv{labf}}] {}
+    
+    %% jonction entre les points
+     (a) 
+     -- (b)
+     node [midway, inner sep=3pt,  label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}, ] {}
+     -- (c) 
+     node [midway, inner sep=3pt,  label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}, ] {}
+     -- (d) 
+     node [midway, inner sep=3pt,  label={[inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}, ] {}
+     -- (f)
+     node [midway, inner sep=3pt,  label={[inner sep=\pv{inner sep}]\pv{posD}:\pv{labD}}, ] {}
+     -- cycle
+     %% Tracé en pointillé
+     (e)
+     edge (d)
+     edge (b)
+     edge (f)
+     (c) 
+     edge[densely dashed] (a)
+     ;
+  }},
+  prismoid trib/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  rotate/.initial=0,
+  scale/.initial=1,
+  laba/.initial=\empty,
+  labb/.initial=\empty,
+  labc/.initial=\empty,
+  labd/.initial=\empty,
+  labe/.initial=\empty,
+  labf/.initial=\empty,
+  labA/.initial=\empty,
+  labB/.initial=\empty,
+  labC/.initial=\empty,
+  labD/.initial=\empty,
+  posa/.initial=left,
+  posb/.initial=right,
+  posc/.initial=right,
+  posd/.initial=above,
+  pose/.initial=right,
+  posf/.initial=left,
+  posA/.initial=left,
+  posB/.initial=below right,
+  posC/.initial=right,
+  posD/.initial=above,
+  inner sep/.initial=3pt,
+  fill/.initial=black!15,
+  fill opacity/.initial=1,
+}
+%%%%%%%%%%%%%%%%%%%% PYRAMIDE A BASE CARRÉE v210331 %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/pyramid/.style={code={
+    \tikzset{pyramid/.cd,#1}
+    \def\pv##1{\pgfkeysvalueof{/tikz/pyramid/##1}}
+    \draw [solid, opacity=0.8, pic actions, fill=\pv{fill}, fill opacity=\pv{fill opacity}, scale=\pv{scale}]
+    %%  point o - avant gauche
+    (0,0,0) coordinate (a)
+    node [label={[inner sep=\pv{inner sep}, fill opacity=1]\pv{posa}:\pv{laba}}] {}
+    %% point a - avant droit
+    (\pv{width},0,0) coordinate (b)
+    node [label={[inner sep=\pv{inner sep}, fill opacity=1]\pv{posb}:\pv{labb}}] {}
+    %% point b - arrière droit
+    (\pv{width},0,\pv{depth}) coordinate (c)
+    node [label={[inner sep=\pv{inner sep}, fill opacity=1]\pv{posc}:\pv{labc}}] {}
+    %% point c - arrière gauche
+    (0,0,\pv{depth}) coordinate (d)
+    node [label={[inner sep=\pv{inner sep}, fill opacity=1]\pv{posd}:\pv{labd}}] {}
+    %% point d - sommet
+    (\pv{width}/2,\pv{height},\pv{depth}/2) coordinate (e)
+    node [label={[inner sep=\pv{inner sep}, fill opacity=]\pv{pose}:\pv{labe}}] {}
+    %%  Tracé
+    (a) 
+     -- (b) 
+     node [midway, \pv{posA}, inner sep=\pv{inner sep}, fill opacity=1] {\pv{labA}}
+     -- (c) 
+     node [midway, \pv{posB}, inner sep=\pv{inner sep}, fill opacity=1] {\pv{labB}}
+     -- (e)
+     node [midway, \pv{posC}, inner sep=\pv{inner sep}, fill opacity=1] {\pv{labC}}
+     -- cycle
+     %%  Tracé
+     (e)
+     edge (b)
+     %%%        tracés en pointillés
+     (d) 
+     edge[densely dashed] (a)
+     edge[densely dashed] (c) 
+     edge[densely dashed] (e);
+  }},
+  pyramid/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  scale/.initial=1,
+  laba/.initial=\empty,
+  labb/.initial=\empty,
+  labc/.initial=\empty,
+  labd/.initial=\empty,
+  labe/.initial=\empty,
+  labA/.initial=\empty,
+  labB/.initial=\empty,
+  labC/.initial=\empty,
+  posa/.initial=below,
+  posb/.initial=below,
+  posc/.initial=right,
+  posd/.initial=below right,
+  pose/.initial=above,
+  posA/.initial=below,
+  posB/.initial=below right,
+  posC/.initial=above right,
+  inner sep/.initial=3pt,
+  fill opacity/.initial=0.5,
+  fill/.initial=black!30,
+}
+
+%%%%%%%%%%%%%%%%%%%% SPHERE v210331 %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/sphere/.style={code={%
+    \tikzset{sphere/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/sphere/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=sph, scale=\pv{scale}]
+        \path[sphere/corps]
+        %%%     Patrie supérieur
+        plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}](
+            {\pv{ray}*cos(\t)},
+            {\pv{ray}*sin(\t)},
+            0
+        )
+        --
+        %%%     Patrie Inférieur
+        plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}](
+            -{\pv{ray}*cos(\t)},
+            -{\pv{ray}*sin(\t)},
+            0
+        )
+        -- cycle
+        ;
+        \draw[thick, densely dashed]
+        %%%       Arc Avant
+        plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan](
+            {\pv{ray}*cos(\t)},
+            0,
+            {\pv{ray}*sin(\t)}
+        )
+        %%%       Arc Arrière
+        plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan](
+            {\pv{ray}*cos(\t)},
+            0,
+            {\pv{ray}*sin(\t)}
+        )
+        (0,0,0) node[circle, fill, inner sep=0, minimum size=4pt, label={[opacity=1, inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}](A){}
+        ;
+    \end{scope}
+  }},
+  sphere/.cd,
+  ray/.initial=5,
+  labA/.initial=,
+  posA/.initial=above,
+  inner sep/.initial=0pt,
+  scale/.initial=1,
+  corps/.style={draw,fill=black!30, fill opacity=0.5},
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%% DEMI SPHERE V210601 %%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\tikzset{pics/demi sphere/.style={code={%
+    \tikzset{demi sphere/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/demi sphere/##1}}
+    \pgfmathsetmacro{\myan}{atan2(\pgf@zx,\pgf@xx)}
+    \begin{scope}[local bounding box=sph]
+        %%%     point central
+        \path[demi sphere/corps]
+            %%%     Patrie supérieur
+            plot[smooth,variable=\t,samples=19,domain=\myan:{-1*sign(\myan)*180+\myan}](
+                -{\pv{ray}*\pv{scale}*cos(\t)},
+                -{\pv{ray}*\pv{scale}*sin(\t)},
+                0
+            )
+            %%%       Arc Avant
+            
+            plot[smooth,variable=\t,samples=19,domain={-1*sign(\myan)*180+\myan}:\myan](
+                {-\pv{ray}*\pv{scale}*cos(\t)},
+                0,
+                {\pv{ray}*\pv{scale}*sin(\t)}
+            )
+            ;
+            %%% Trait en pointié
+        \draw[thick, densely dashed]
+            %%%       Arc Arrière
+            plot[smooth,variable=\t,samples=19,domain={sign(\myan)*180+\myan}:\myan](
+                {\pv{ray}*\pv{scale}*cos(\t)},
+                0,
+                {\pv{ray}*\pv{scale}*sin(\t)}
+            )
+            (0,0,0) node[circle, fill, inner sep=0, minimum size=4pt, label={[opacity=1, inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}](A){}
+        ;
+    \end{scope}
+  }},
+  demi sphere/.cd,
+  ray/.initial=5,
+  scale/.initial=1,
+  labA/.initial=,
+  posA/.initial=above,
+  inner sep/.initial=0pt,
+  corps/.style={draw,fill=black!30, fill opacity=0.5},
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%% PRISMOID horrizontal v210528 %%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/prismoid h/.style={code={
+    \tikzset{prismoid h/.cd,#1}%
+    \def\pv##1{\pgfkeysvalueof{/tikz/prismoid h/##1}}%
+    \draw [solid, opacity=.8, pic actions, fill=\pv{fill}, scale=\pv{scale}]
+    %%  point a - avant gauche
+    (0,0,0) coordinate (a)
+    node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] {}
+    %% point b - arrière droit
+    (\pv{width},0,0) coordinate (b)
+    node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posb}:\pv{labb}}] {}
+    %% point c - arrière droit
+    (\pv{width},0,\pv{depth}) coordinate (c)
+    node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posc}:\pv{labc}}] {}
+    %% point d - arrière gauche
+    (0,0,\pv{depth}) coordinate (d)
+    node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posd}:\pv{labd}}] {}
+    %% point e - haut gauche
+    (0+\pv{xoffset},\pv{height},0+\pv{yoffset}) coordinate (e)
+    node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{pose}:\pv{labe}}] {}
+    %% point f - haut droite
+    (\pv{width}+\pv{xoffset},\pv{height},0+\pv{yoffset}) coordinate (f)
+    node[label={[opacity=1, inner sep=\pv{inner sep}]\pv{posf}:\pv{labf}}] {}
+    %% jonction des points - façade
+    (a) 
+    edge (e)
+    -- (b) 
+    edge (f)
+    -- (c) 
+    -- (f) 
+    -- (e) 
+    -- cycle
+    %% jonction des points - arête arrière gauche
+    (d) 
+    edge[dashed] (a)
+    edge[dashed] (c)
+    edge[dashed] (e)
+    ;
+  }},
+  prismoid h/.cd,
+  % taille de la figure
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=2.5,
+  scale/.initial=1,
+  inner sep/.initial=0 pt,
+  laba/.initial=,
+  labb/.initial=,
+  labc/.initial=,
+  labd/.initial=,
+  labe/.initial=,
+  labf/.initial=,
+  posa/.initial=below,
+  posb/.initial=below,
+  posc/.initial=right,
+  posd/.initial=above right,
+  pose/.initial=above,
+  posf/.initial=above,
+  fill/.initial=black!15,
+}

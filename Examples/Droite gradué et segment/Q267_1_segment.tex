@@ -1,0 +1,52 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+\usepackage{tikz}%  permet de dessiner des figures, des graphiques
+\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+
+%%  FONT
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{tgadventor}% paquet de police de caractère TGadventor
+\usepackage{sansmath}%  Copie-colle la police active dans \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+\tikzset{pictparam/.style={font={\sansmath\sffamily}, thick, line cap=round, line join=round, >=latex, x=1.0cm, y=1.0cm, scale=1}}
+
+% segment
+% \pic[fill=green, text=green, draw=black, opacity=.7] at (5,0) {segment={label=B, start=3, end=3}};
+%
+\tikzset{
+    pics/segment/.style={
+        code={
+            \tikzset{segment/.cd,#1}
+            \def\pv##1{
+                \pgfkeysvalueof{/tikz/segment/##1}
+            }
+            \draw[|-|, pic actions] (0,0) coordinate (o) 
+            node[inner sep=7.5pt, anchor=east] {\pv{label}}% Label à gauche
+            node[inner sep=9pt, anchor=south, scale=0.75] {\pv{start}} 
+            -- ++(-\pv{start}*\pv{scale}+\pv{end}*\pv{scale},0) coordinate (b) 
+            node[inner sep=9pt, anchor=south, scale=0.75] {\pv{end}};
+    }
+    },
+    segment/.cd,
+    label/.initial=A,
+    start/.initial=0,
+    end/.initial=5,
+    scale/.initial=60,
+}
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{adjustbox}{width={15cm},totalheight={15cm},keepaspectratio}
+\begin{tikzpicture}[pictparam]
+    %\pic {segment};
+    \pic at (0,0) {segment={label=A, start=7, end=7.1}};
+    \pic at (0,-1) {segment={label=B, start=7.2, end=7.25}};
+    \pic at (0,-2) {segment={label=C, start=7.02, end=7.122}};
+    \pic at (0,-3) {segment={label=D, start=7.211, end=7.291}};
+\end{tikzpicture}
+\end{adjustbox}
+\end{document}

@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%% Dotted CUBOID %%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{pics/dotted cuboid/.style={code={%
+    \tikzset{cuboid/.cd,#1}%
+    \def\pv##1{%
+        \pgfkeysvalueof{/tikz/cuboid/##1}
+        }%
+    \draw [solid, pic actions, draw, opacity=\pv{opacity}]
+        %%  point o - avant gauche
+        (0,0,0) coordinate (o)
+        %% point a - avant droite
+        (\pv{scale}*\pv{width},0,0) coordinate (a)
+        %% point b - arrière droite
+        (\pv{scale}*\pv{width},0,\pv{scale}*\pv{depth}) coordinate (b)
+        %% point c - arrière gauche
+        (0,0,\pv{scale}*\pv{depth}) coordinate (c)
+        %% point d - haut arrière gauche
+        ({0+\pv{xoffset}*\pv{scale}+\pv{shrink}*\pv{scale}},\pv{height}*\pv{scale}, {(\pv{depth}*\pv{scale})-(\pv{shrink}*\pv{scale})+(\pv{yoffset}*\pv{scale})}) coordinate (d)
+        %% point e - haut arrière droite
+        (\pv{scale}*\pv{width}+\pv{xoffset}*\pv{scale}-\pv{shrink}*\pv{scale},\pv{scale}*\pv{height},\pv{scale}*\pv{depth}-\pv{shrink}*\pv{scale}+\pv{yoffset}*\pv{scale}) coordinate (e)
+        %% point f - haut avant droite
+        (\pv{scale}*\pv{width}+\pv{xoffset}*\pv{scale}-\pv{shrink}*\pv{scale},\pv{scale}*\pv{height},0+\pv{yoffset}*\pv{scale}+\pv{shrink}*\pv{scale}) coordinate (f)
+        %% point g - haut avant gauche
+        (0+\pv{shrink}*\pv{scale}+\pv{xoffset}*\pv{scale},\pv{scale}*\pv{height},{0+\pv{shrink}*\pv{scale}+\pv{yoffset}*\pv{scale}}) coordinate (g)
+        %% jonction entre les points
+        %%% bordure
+         (o) 
+         -- (a)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posA}:\pv{labA}}] {}
+         -- (b)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posB}:\pv{labB}}] {}
+         -- (e)
+         node[midway, label={[inner sep=\pv{inner sep}]\pv{posC}:\pv{labC}}] {}
+         -- (d)
+         -- (g)
+         -- cycle
+         %%% jonction interne - avant
+         (f)
+         edge (a)
+         edge (e)
+         edge (g)
+         %%% jonction interne - arrière
+         (c) 
+         edge[densely dashed] (o) 
+         edge[densely dashed] (b) 
+         edge[densely dashed] (d)
+         
+         %%% Les points
+         (o) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{poso}:\pv{labo}}] {}
+         (a) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{posa}:\pv{laba}}] {}
+         (b) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{posb}:\pv{labb}}] {}
+         (c) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{posc}:\pv{labc}}] {}
+         (d) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{posd}:\pv{labd}}] {}
+         (e) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{pose}:\pv{labe}}] {}
+         (f) node[circle, scale=0.4, fill=\pv{dot fill}, draw,label={[inner sep=\pv{inner sep}]\pv{posf}:\pv{labf}}] {}
+         (g) node[circle, scale=0.4, fill=\pv{dot fill}, draw, label={[inner sep=\pv{inner sep}]\pv{posg}:\pv{labg}}] {}
+    ;
+  }},
+  cuboid/.cd,
+  width/.initial=5,
+  height/.initial=5,
+  depth/.initial=5,
+  xoffset/.initial=0,
+  yoffset/.initial=0,
+  shrink/.initial=0,
+  inner sep/.initial=0pt,
+  labA/.initial=,
+  labB/.initial=,
+  labC/.initial=,
+  labo/.initial=,
+  laba/.initial=,
+  labb/.initial=,
+  labc/.initial=,
+  labd/.initial=,
+  labe/.initial=,
+  labf/.initial=,
+  labg/.initial=,
+  posA/.initial=below,
+  posB/.initial=below right,
+  posC/.initial=right,
+  poso/.initial=below,
+  posa/.initial=below,
+  posb/.initial=below right,
+  posc/.initial=above left,
+  posd/.initial=above,
+  pose/.initial=above,
+  posf/.initial=above,
+  posg/.initial=above,
+  dot fill/.initial=black!100,
+  opacity/.initial=1,
+  scale/.initial=1,
+}

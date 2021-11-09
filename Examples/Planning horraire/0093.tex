@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usetikzlibrary{calc}
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor}% paquet de police de caractère TGadventor
+\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+\usepackage{makecell}
+\usepackage{xcolor, colortbl}
+
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+%\input{preamble.tex}
+%\input{parameters.tex}
+
+%\input{types/f2d_fig}
+
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%% COLORS %%%%%%%%%%%%%%%%%%
+\definecolor{orange}{RGB}{245,128,37}
+\definecolor{bleu}{RGB}{0,0,255}
+\definecolor{gris}{RGB}{158,158,158}
+\definecolor{vert}{RGB}{0,178,0}
+\definecolor{rouge}{RGB}{255,0,0}
+\definecolor{violet}{RGB}{190,0,120}
+
+%%%%%%%%%%%%%%%%%% COLORS - circular graph %%%%%%%%%%%%%%%%%%
+\definecolor{cmarine}{RGB}{66,81,174}
+\definecolor{corange}{RGB}{238,125,49}
+\definecolor{cgris}{RGB}{165,165,165}
+\definecolor{cjaune}{RGB}{254,192,0}
+\definecolor{cbleu}{RGB}{89,155,213}
+\definecolor{cvert}{RGB}{113,173,71}
+\definecolor{crouge}{RGB}{205,102,96}
+\definecolor{cmauve}{RGB}{178,55,167}
+\definecolor{ccyan}{RGB}{30,192,200}
+\definecolor{cnoir}{RGB}{0,0,0}
+
+%%%         Nouveau type de colonne
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\sffamily
+\large
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|>{\columncolor{cbleu!20}}C{3cm}||*{5}{>{\columncolor{orange!20}}C{3cm}|} *{2}{>{\columncolor{cvert!20}}C{3cm}|}}
+    \hline
+    \cellcolor{cbleu!0} \textbf{Semaine du} 16/09/2019 \textbf{au} 22/09/2019 &
+    \textbf{Lundi}\newline 16/09 &
+    \textbf{Mardi}\newline 17/09 &
+    \textbf{Mercredi}\newline 18/09 &
+    \textbf{Jeudi}\newline 19/09 &
+    \textbf{Vendredi}\newline 20/09 &
+    \textbf{Samedi}\newline 21/09 &
+    \textbf{Dimanche}\newline 22/09 \\
+    \hline
+    %%%
+    \textbf{Activités \newline communes} & & & & & & 19h30 : Dîner chez Mamie Yvette & \\
+    \hline
+    \textbf{Papa} & & & \multicolumn{2}{>{\columncolor{orange!20}}C{6.45cm}|}{Déplacement à l'étranger \newline Retour à 21h Jeudi} & & & \\
+    \hline
+    \textbf{Maman} & & & 15h : Préparatifs pour le spectable de danse de Sonia & & 18h : Acheter le gâteau pour le dîner de samedi & & \\
+     \hline
+    \textbf{Mathéo} & 13h15 : Rendez-vous chez le pédiatre & & & & & & \\
+     \hline
+     \textbf{Sonia} & & & & 19h: Spectacle de danse & & & \\
+     \hline
+     \textbf{Louise} & 13h30 : Rendez-vous chez le pédiatre & & & & & & \\
+     \hline
+     \rowcolor{black!0} \textbf{Notes} & \cellcolor{black!7} Ne pas oublier les carnets de santé!!! & & \cellcolor{black!7} Recoudre l'ourlet de la robe de Sonia!!! & & & & \\
+     \hline
+\end{tabular}
+\end{document}

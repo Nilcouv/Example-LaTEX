@@ -1,0 +1,38 @@
+%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
+\documentclass[border=10pt]{standalone}
+
+%%%%%%%%%%%%%%%%%% PACKAGE %%%%%%%%%%%%%%%%%%
+%\usepackage{tikz, tkz-euclide}%  permet de dessiner des figures, des graphiques
+%\usepackage{adjustbox}% permet de déterminer une taille de fenêtre
+%%  FONT
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgadventor}% paquet de police de caractère TGadventor
+%\usepackage{sansmath}%  Copie-colle la police active dans 
+%                       \sfdefault (/!\ N'EST PAS UNE POLICE DE CARACTÈRES)
+%\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%% INPUT %%%%%%%%%%%%%%%%%%
+\input{preamble}
+\input{parameters}
+\input{types/f3d_solid_lab}
+%%%%%%%%%%%%%%%%%% SETUP %%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{tikzpicture}[volum3D, x={(0:1cm)}, y={(90:1cm)}, z={(89:0.4cm),scale=1}]
+
+% calibration cross
+%\pic at (5,0,0) {calcross};
+
+%   Figures
+\pic{sphere={ray=5.5, scale=0.5}};
+
+\draw[scale=0.5]
+    (0,0,0)
+    edge[<->, dashed]
+    node[midway, above]{$5,5$ cm}
+    +(5.5,0,0)
+;
+
+\end{tikzpicture}
+\end{document}

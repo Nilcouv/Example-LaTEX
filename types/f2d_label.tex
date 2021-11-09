@@ -1,0 +1,23 @@
+%%%%%%%%%%%%%%%%%%%%%%%% bblarrow %%%%%%%%%%%%%%%%%%%%%%%%
+% Example:
+% \pic[fill=green, text=green, draw=black, opacity=.7] at (5,0) {bubblelab={label=3, color=3, length=2, scale=1}};
+%
+%%  Labelle à bulle
+\tikzset{
+    pics/bubblelab/.style={
+        code={
+            \tikzset{bubblelab/.cd,#1}
+            \def\pv##1{% <- added
+                \pgfkeysvalueof{/tikz/bubblelab/##1}% <- added
+            }
+        \draw[color=\pv{color}, ->] (0,6pt) -- +(90:\pv{length}) 
+        node[color=\pv{color},fill=\pv{fill}!20, anchor=south, scale=\pv{scale}, circle] {\pv{label}};;
+    }
+    },
+    bubblelab/.cd,
+    label/.initial=A,
+    color/.initial=black,
+    fill/.initial=black,
+    length/.initial=0.8,
+    scale/.initial=0.8,
+}
